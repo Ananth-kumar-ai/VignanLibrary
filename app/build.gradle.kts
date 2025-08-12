@@ -32,20 +32,29 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
     implementation("com.airbnb.android:lottie:3.7.0")
     implementation("com.android.volley:volley:1.2.1")
-    implementation("androidx.security:security-crypto:1.1.0-alpha03")
-    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
-    //load profile
-    implementation("com.github.bumptech.glide:glide:4.14.2")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
+    // Glide (latest stable)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    // For Kotlin users: kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+    // GIF support
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
+
+    // EncryptedSharedPreferences (deprecated but usable)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    // Common AndroidX utilities
+    implementation("androidx.core:core-ktx:1.10.0")
 }
