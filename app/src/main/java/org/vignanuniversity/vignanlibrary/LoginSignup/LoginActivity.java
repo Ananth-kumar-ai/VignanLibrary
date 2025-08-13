@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.vignanuniversity.vignanlibrary.Adapter.URL;
-import org.vignanuniversity.vignanlibrary.DataFetcher.All_DataFetcher;
 import org.vignanuniversity.vignanlibrary.LoadingDialog;
 import org.vignanuniversity.vignanlibrary.MainActivity;
 import org.vignanuniversity.vignanlibrary.R;

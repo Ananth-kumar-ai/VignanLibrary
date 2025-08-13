@@ -29,6 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginSignup.forgot_password" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false"/>
