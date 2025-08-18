@@ -9,144 +9,143 @@
     <string name="jeevan">M.Jeevan</string>
     <string name="Ganesh">N.B.L.Ganesh</string>
     <string name="vertical_line">|</string>
-        <string-array name="user_type">
-            <item>Select Type of User</item>
-            <item>Student</item>
-            <item>Parent</item>
-        </string-array>
+    <string-array name="user_type">
+        <item>Select Type of User</item>
+        <item>Student</item>
+        <item>Parent</item>
+    </string-array>
 
-        <string-array name="feedback_types">
-            <item>Choose a Feedback type</item>
-            <item>Bug</item>
-            <item>New feature</item>
-            <item>General feedback</item>
-            <item>Other</item>
-        </string-array>
+    <string-array name="feedback_types">
+        <item>Choose a Feedback type</item>
+        <item>Bug</item>
+        <item>New feature</item>
+        <item>General feedback</item>
+        <item>Other</item>
+    </string-array>
 
-        <string-array name="skills_array">
-            <item>Select Skills</item>
-            <item>PET</item>
-            <item>BEC</item>
-        </string-array>
+    <string-array name="skills_array">
+        <item>Select Skills</item>
+        <item>PET</item>
+        <item>BEC</item>
+    </string-array>
 
-        <string-array name="internship_types">
-            <item>Select Internship Type</item>
-            <item>Summer Internship</item>
-            <item>Semester Long Internship</item>
-        </string-array>
+    <string-array name="internship_types">
+        <item>Select Internship Type</item>
+        <item>Summer Internship</item>
+        <item>Semester Long Internship</item>
+    </string-array>
 
-        <string-array name="location_types">
-            <item>Select Location</item>
-            <item>Within India</item>
-            <item>Abroad</item>
-        </string-array>
+    <string-array name="location_types">
+        <item>Select Location</item>
+        <item>Within India</item>
+        <item>Abroad</item>
+    </string-array>
 
-        <string-array name="stipend_options">
-            <item>Select Stipend Status</item>
-            <item>Yes</item>
-            <item>No</item>
-        </string-array>
+    <string-array name="stipend_options">
+        <item>Select Stipend Status</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
 
-        <string-array name="project_types">
-            <item>Select Project Type</item>
-            <item>Academic Project</item>
-            <item>Engineering Day</item>
-            <item>Srujanakura</item>
-            <item>Seed Project</item>
-            <item>Other Project</item>
-        </string-array>
+    <string-array name="project_types">
+        <item>Select Project Type</item>
+        <item>Academic Project</item>
+        <item>Engineering Day</item>
+        <item>Srujanakura</item>
+        <item>Seed Project</item>
+        <item>Other Project</item>
+    </string-array>
 
-        <string-array name="roles">
-            <item>Select Role</item>
-            <item>Member</item>
-            <item>Lead</item>
-        </string-array>
+    <string-array name="roles">
+        <item>Select Role</item>
+        <item>Member</item>
+        <item>Lead</item>
+    </string-array>
 
-        <string-array name="team_sizes">
-            <item>Select Team Size</item>
-            <item>1</item>
-            <item>2</item>
-            <item>3</item>
-            <item>4</item>
-            <item>5</item>
-            <item>6</item>
-        </string-array>
+    <string-array name="team_sizes">
+        <item>Select Team Size</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
 
-        <string-array name="placement_status_array">
-            <item>Select Placement Status</item>
-            <item>Written Test</item>
-            <item>Selected</item>
-            <item>TR</item>
-            <item>HR</item>
-        </string-array>
+    <string-array name="placement_status_array">
+        <item>Select Placement Status</item>
+        <item>Written Test</item>
+        <item>Selected</item>
+        <item>TR</item>
+        <item>HR</item>
+    </string-array>
 
-        <string-array name="activity_type_array">
-            <item>Select Activity Type</item>
-            <item>Value Added Course</item>
-            <item>Training Program</item>
-            <item>Workshop</item>
-            <item>EPCS</item>
-            <item>BEC</item>
-        </string-array>
+    <string-array name="activity_type_array">
+        <item>Select Activity Type</item>
+        <item>Value Added Course</item>
+        <item>Training Program</item>
+        <item>Workshop</item>
+        <item>EPCS</item>
+        <item>BEC</item>
+    </string-array>
 
-        <string-array name="platform_array">
-            <item>Select Coding Platform</item>
-            <item>Hacker</item>
-            <item>Hacker Earth</item>
-            <item>Code Chef</item>
-            <item>Top Coder</item>
-        </string-array>
+    <string-array name="platform_array">
+        <item>Select Coding Platform</item>
+        <item>Hacker</item>
+        <item>Hacker Earth</item>
+        <item>Code Chef</item>
+        <item>Top Coder</item>
+    </string-array>
 
-        <string-array name="type_array">
-            <item>Select Type of Activity</item>
-            <item>Intra Departmental</item>
-            <item>Hostel</item>
-            <item>University Level</item>
-            <item>Regional</item>
-            <item>National</item>
-            <item>Zonal</item>
-            <item>International</item>
-        </string-array>
+    <string-array name="type_array">
+        <item>Select Type of Activity</item>
+        <item>Intra Departmental</item>
+        <item>Hostel</item>
+        <item>University Level</item>
+        <item>Regional</item>
+        <item>National</item>
+        <item>Zonal</item>
+        <item>International</item>
+    </string-array>
 
-        <string-array name="role_array">
-            <item>Select Role</item>
-            <item>Core</item>
-            <item>Chief Coordinator</item>
-            <item>Coordinator</item>
-            <item>Volunteer</item>
-        </string-array>
+    <string-array name="role_array">
+        <item>Select Role</item>
+        <item>Core</item>
+        <item>Chief Coordinator</item>
+        <item>Coordinator</item>
+        <item>Volunteer</item>
+    </string-array>
 
-        <string-array name="exam_types">
-            <item>Select Exam Type</item>
-            <item>GRE</item>
-            <item>IELTS</item>
-            <item>GATE</item>
-            <item>CAT</item>
-            <item>GMAT</item>
-            <item>TOEFL</item>
-            <item>DUOLINGO</item>
-        </string-array>
+    <string-array name="exam_types">
+        <item>Select Exam Type</item>
+        <item>GRE</item>
+        <item>IELTS</item>
+        <item>GATE</item>
+        <item>CAT</item>
+        <item>GMAT</item>
+        <item>TOEFL</item>
+        <item>DUOLINGO</item>
+    </string-array>
 
 
+    <string-array name="id_activityScreenTitles">
+        <item></item>
+        <item></item>
+        <item>DashBoard</item>
+        <item>Attendance</item>
+        <item>Fee Details</item>
+        <item>Semester Marks</item>
+        <item>Internal Marks</item>
+        <item>Credits Details</item>
+        <item>College Feeds</item>
+        <item>Activities Details</item>
+        <item>Personal Details</item>
+        <item></item>
+        <item>Log Out</item>
+    </string-array>
 
-        <string-array name="id_activityScreenTitles">
-            <item></item>
-            <item></item>
-            <item>DashBoard</item>
-            <item>Attendance</item>
-            <item>Fee Details</item>
-            <item>Semester Marks</item>
-            <item>Internal Marks</item>
-            <item>Credits Details</item>
-            <item>College Feeds</item>
-            <item>Activities Details</item>
-            <item>Personal Details</item>
-            <item></item>
-            <item>Log Out</item>
-        </string-array>
-
-        <string name="back"><![CDATA[<-]]></string>
-        <string name="forward"><![CDATA[->]]></string>
-        <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
