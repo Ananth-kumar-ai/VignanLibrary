@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/borrowFragmentRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.BorrowFragment">
+    android:background="#ECECEC">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tv_books_borrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Books History"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_gravity="top|start"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerBorrowedBooks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp" />
 
 </FrameLayout>
