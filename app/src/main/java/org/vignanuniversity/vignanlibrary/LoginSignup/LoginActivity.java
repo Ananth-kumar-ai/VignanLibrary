@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import android.Manifest;
 import android.content.Context;
@@ -181,6 +180,13 @@ public class LoginActivity extends AppCompatActivity {
 //            Toast.makeText(getApplicationContext(), "Internet Connected", Toast.LENGTH_SHORT).show();
         }
 
+
+        if(preferences.getBoolean("isLogin",false)){
+            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            i.putExtra("refreshPages",true);
+            startActivity(i);
+            finish();
+        }
 
         if(preferences.getBoolean("isLogin",false)){
             Intent i = new Intent(getApplicationContext(), MainActivity.class);

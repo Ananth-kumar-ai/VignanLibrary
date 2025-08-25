@@ -10,7 +10,7 @@ import org.vignanuniversity.vignanlibrary.R;
 import org.vignanuniversity.vignanlibrary.Fragments.BorrowFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.CatalogFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.HomeFragment;
-import org.vignanuniversity.vignanlibrary.Fragments.ProfileFragment;
+import org.vignanuniversity.vignanlibrary.ProfileFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class MainActivity extends AppCompatActivity {
