@@ -1,62 +1,96 @@
 package org.vignanuniversity.vignanlibrary.Fragments;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.widget.Toast;
 import org.vignanuniversity.vignanlibrary.R;
-
 
 public class CatalogFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private CardView cardBooks, cardEbooks, cardPYQP;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_catalog, container, false);
 
-    public CatalogFragment() {
-        // Required empty public constructor
+        initViews(view);
+        setupClickListeners();
+
+        return view;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CatalogFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CatalogFragment newInstance(String param1, String param2) {
-        CatalogFragment fragment = new CatalogFragment();
+    private void initViews(View view) {
+        cardBooks = view.findViewById(R.id.cardBooks);
+        cardEbooks = view.findViewById(R.id.cardEbooks);
+        cardPYQP = view.findViewById(R.id.cardPYQP);
+    }
+
+    private void setupClickListeners() {
+        cardBooks.setOnClickListener(v -> {
+            animateCard(cardBooks);
+            navigateToBooksFragment();
+        });
+
+        cardEbooks.setOnClickListener(v -> {
+            animateCard(cardEbooks);
+            showComingSoonMessage("E-Books");
+        });
+
+        cardPYQP.setOnClickListener(v -> {
+            animateCard(cardPYQP);
+            showComingSoonMessage("Previous Year Question Papers");
+        });
+    }
+
+    private void animateCard(CardView card) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                1.0f, 0.95f,
+                1.0f, 0.95f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        scaleAnimation.setDuration(100);
+        scaleAnimation.setRepeatMode(Animation.REVERSE);
+        scaleAnimation.setRepeatCount(1);
+
+        card.startAnimation(scaleAnimation);
+    }
+
+    private void navigateToBooksFragment() {
+        BooksFragment booksFragment = new BooksFragment();
+
+        // Pass API URL to BooksFragment
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        args.putString("api_url", "http://192.168.10.25/jspapi/library/basedOnaccno.jsp");
+        booksFragment.setArguments(args);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+        );
+        transaction.replace(R.id.fragment_container, booksFragment); // Make sure this matches your container ID
+        transaction.addToBackStack("BooksFragment");
+        transaction.commit();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    private void showComingSoonMessage(String feature) {
+        if (getContext() != null) {
+            Toast.makeText(getContext(),
+                    feature + " coming soon!",
+                    Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_catalog, container, false);
     }
 }
