@@ -1,5 +1,7 @@
 package org.vignanuniversity.vignanlibrary.Fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,12 +45,12 @@ public class CatalogFragment extends Fragment {
 
         cardEbooks.setOnClickListener(v -> {
             animateCard(cardEbooks);
-            showComingSoonMessage("E-Books");
+            openEBooksWebsite();
         });
 
         cardPYQP.setOnClickListener(v -> {
             animateCard(cardPYQP);
-            showComingSoonMessage("Previous Year Question Papers");
+            navigateToPYQPFragment();
         });
     }
 
@@ -81,8 +83,38 @@ public class CatalogFragment extends Fragment {
                 android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right
         );
-        transaction.replace(R.id.fragment_container, booksFragment); // Make sure this matches your container ID
+        transaction.replace(R.id.fragment_container, booksFragment);
         transaction.addToBackStack("BooksFragment");
+        transaction.commit();
+    }
+
+    private void openEBooksWebsite() {
+        try {
+            String ebooksUrl = "http://192.168.10.34:8080/jspui/handle/123456789/46";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ebooksUrl));
+            startActivity(intent);
+        } catch (Exception e) {
+            // Handle case where no browser is available
+            if (getContext() != null) {
+                Toast.makeText(getContext(),
+                        "Unable to open E-Books. Please check your internet connection.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void navigateToPYQPFragment() {
+        PYQPFragment pyqpFragment = new PYQPFragment();
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+        );
+        transaction.replace(R.id.fragment_container, pyqpFragment);
+        transaction.addToBackStack("PYQPFragment");
         transaction.commit();
     }
 

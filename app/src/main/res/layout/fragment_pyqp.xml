@@ -1,0 +1,1590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:backgroundTint="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_document"
+                    android:layout_marginBottom="16dp"
+                    app:tint="#4A90E2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Previous Year Question Papers"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#2C3E50"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Choose your department to access question papers"
+                    android:textSize="14sp"
+                    android:textColor="#7F8C8D"
+                    android:gravity="center"
+                    android:alpha="0.8" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Search Bar -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_marginStart="16dp"
+                    app:tint="#95A5A6" />
+
+                <EditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:hint="Search departments..."
+                    android:textSize="16sp"
+                    android:textColorHint="#BDC3C7"
+                    android:background="@android:color/transparent"
+                    android:padding="12dp"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Engineering Section -->
+        <TextView
+            android:id="@+id/engineeringHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Engineering"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Row 1 - Agriculture & Automobile -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAgriculture"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#3498DB"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_agriculture"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Agriculture Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAutomobile"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#27AE60"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_car"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Automobile Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 2 - Bio Informatics & Bio Medical -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBioInformatics"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#8E44AD"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_biotech"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bio Informatics Engineering"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBioMedical"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#2ECC71"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_biotech"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bio Medical Engineering"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 3 - Bio Technology & Chemical -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBioTechnology"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#D35400"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_biotech"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bio Technology Engineering"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardChemical"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#C0392B"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_chemistry"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Chemical Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 4 - Civil & Electrical -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCivil"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#95A5A6"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_building"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Civil Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardElectrical"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#FDCB6E"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_electrical"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Electrical &amp; Electronics Engineering"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 5 - Electronics & Food Technology -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardElectronics"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#E17055"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_electronics"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Electronics &amp; Communication Engineering"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFoodTech"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#81ECEC"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_food"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Food Technology Engineering"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 6 - Information Technology & Mechanical -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardIT"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#00B894"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_information"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Information Technology Engineering"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMechanical"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#E84393"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_mechanical"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mechanical Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 7 - Petroleum & Robotics -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardPetroleum"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#636E72"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_petroleum"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Petroleum Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardRobotics"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#2D3436"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_robotics"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Robotics &amp; Automation Engineering"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 8 - Textile (Single Card) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardTextile"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#B2BEC3"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_textile"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Textile Engineering"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Computer Science & IT Section -->
+        <TextView
+            android:id="@+id/computerScienceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Computer Science &amp; IT"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Row 1 - CSE & CSE Data Science -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCSE"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#2980B9"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_computer"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Computer Science Engineering"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCSEDataScience"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#6C5CE7"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_data"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CSE - Data Science"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 2 - CSE AI&ML & CSE CS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCSEAIML"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#A29BFE"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ai"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CSE - AI &amp; ML"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCSECS"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#74B9FF"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_computer"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CSE - CS"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 3 - CSE CS BS & BCA -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCSECSBS"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#0984E3"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_computer"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CSE - CS - BS"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBCA"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#F39C12"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_computer"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="BCA"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 4 - MCA (Single Card) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMCA"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#FD79A8"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_computer"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="MCA"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Business & Management Section -->
+        <TextView
+            android:id="@+id/businessHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Business &amp; Management"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBBA"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#34495E"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_business"
+                        android:layout_marginBottom="8dp"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BBA"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMBA"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#00CEC9"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_mba"
+                        android:layout_marginBottom="8dp"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MBA"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- Law Section -->
+        <TextView
+            android:id="@+id/lawHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Law"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBALLB"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#E74C3C"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_law"
+                        android:layout_marginBottom="8dp"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BA - LLB"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBBALLB"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#1ABC9C"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_law"
+                        android:layout_marginBottom="8dp"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BBA - LLB"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <!-- Science Section -->
+        <TextView
+            android:id="@+id/scienceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Science"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Row 1 - BSC & Agriculture BSC -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardBSC"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#16A085"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_science"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="BSC"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAgricultureBSC"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#27AE60"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_agriculture"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Agriculture - BSC"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- Row 2 - MSC Chemistry (Single Card) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMSCChemistry"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="#A29BFE"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_chemistry"
+                            android:layout_marginBottom="8dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="MSC - Chemistry"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Pharmacy Section -->
+        <TextView
+            android:id="@+id/pharmacyHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pharmacy"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBPharmacy"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:backgroundTint="#9B59B6"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_pharmacy"
+                        android:layout_marginBottom="8dp"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="B - Pharmacy"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
