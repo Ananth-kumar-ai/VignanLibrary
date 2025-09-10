@@ -12,7 +12,10 @@
         android:title="Vignan Library"
         android:background="#CC6442"
         android:titleTextColor="@android:color/white"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        app:menu="@menu/menu_main"
+        app:navigationIconTint="@android:color/white"
+        app:titleTextColor="@android:color/white" />
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
