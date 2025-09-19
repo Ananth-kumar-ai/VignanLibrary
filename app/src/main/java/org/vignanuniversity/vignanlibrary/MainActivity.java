@@ -1,6 +1,8 @@
 package org.vignanuniversity.vignanlibrary;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,13 +12,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import org.vignanuniversity.vignanlibrary.R;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import org.vignanuniversity.vignanlibrary.Fragments.BorrowFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.CatalogFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.HomeFragment;
+import org.vignanuniversity.vignanlibrary.LoginSignup.Change_pasword;
+import org.vignanuniversity.vignanlibrary.LoginSignup.LoginActivity;
 import org.vignanuniversity.vignanlibrary.ProfileFragment;
-import com.google.android.material.appbar.MaterialToolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.orange_toolbar));
+            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#CC6442"));
         }
 
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
@@ -89,68 +93,31 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.menu_change_password) {
             // Handle Change Password
-            Toast.makeText(this, "Change Password clicked", Toast.LENGTH_SHORT).show();
-            // You can start a new activity for change password
-            // Intent intent = new Intent(this, ChangePasswordActivity.class);
-            // startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), Change_pasword.class));
             return true;
 
-        } else if (id == R.id.menu_privacy_policy) {
-            // Handle Privacy Policy
-            Toast.makeText(this, "Privacy & Policy clicked", Toast.LENGTH_SHORT).show();
-            // You can start a new activity or show a dialog
-            // Intent intent = new Intent(this, PrivacyPolicyActivity.class);
-            // startActivity(intent);
-            return true;
-
-        } else if (id == R.id.menu_about_us) {
-            // Handle About Us
-            Toast.makeText(this, "About Us clicked", Toast.LENGTH_SHORT).show();
-            // You can start a new activity or show a dialog
-            showAboutUsDialog();
-            return true;
-
-        } else if (id == R.id.menu_feedback) {
-            // Handle Feedback
-            Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
-            // You can start a new activity for feedback
-            // Intent intent = new Intent(this, FeedbackActivity.class);
-            // startActivity(intent);
-            return true;
-
-        } else if (id == R.id.menu_logout) {
+        }
+        else if (id == R.id.menu_logout) {
             // Handle Logout
-            showLogoutDialog();
+            handleLogout();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+    private void handleLogout() {
+        SharedPreferences preferences = getSharedPreferences("LOGIN_PREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLogin", false);
+        editor.putString("regno", "");
+        editor.apply();
 
-    private void showAboutUsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("About Us")
-                .setMessage("Vignan Library App\nVersion 1.0\n\nDeveloped for Vignan University\nLibrary Management System")
-                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                .show();
-    }
+        SharedPreferences sharedPreferences = getSharedPreferences("CACHE_PREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor1 = sharedPreferences.edit();
+        editor1.clear();
+        editor1.apply();
 
-    private void showLogoutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Logout")
-                .setMessage("Are you sure you want to logout?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    // Handle logout logic here
-                    // Clear user session, preferences, etc.
-                    Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-
-                    // Navigate to login screen
-                    // Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    // startActivity(intent);
-                    // finish();
-                })
-                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
-                .show();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
     }
 }
+

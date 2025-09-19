@@ -30,6 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginSignup.forgot_password" />
+        <activity android:name=".LoginSignup.Change_pasword" />
+
 
         <activity
             android:name=".MainActivity"

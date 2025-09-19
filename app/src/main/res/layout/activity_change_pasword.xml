@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:padding="8dp"
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="120sp"
+                android:src="@drawable/vignan_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="80dp"/>
+
+            <LinearLayout
+                android:id="@+id/update_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTextField1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Old Password"
+                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeWidth="1.5dp"
+                    app:hintTextColor="#CC6442">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/oldpass_validation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:inputType="textPassword"
+                        android:nextFocusForward="@+id/new_pass"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTextField2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter New Password"
+                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeWidth="1.5dp"
+                    app:hintTextColor="#CC6442">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/new_pass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:inputType="textPassword"
+                        android:nextFocusForward="@+id/new_pass_con"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTextField3"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Re-Enter New Password"
+                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeWidth="1.5dp"
+                    app:hintTextColor="#CC6442">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/new_pass_con"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:inputType="textPassword"
+                        android:nextFocusForward="@+id/submit"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Square shape button matching second file style -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Update Password"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#CC6442"
+                    app:cornerRadius="0dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

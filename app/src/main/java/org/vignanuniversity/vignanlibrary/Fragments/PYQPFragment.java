@@ -345,21 +345,29 @@ public class PYQPFragment extends Fragment {
                 Department department = departments[departmentIndex];
                 String url = BASE_URL + department.urlId;
 
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
+                // Ensure URL has a proper scheme (http/https)
+                if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                    url = "https://" + url;
+                }
 
-                // Check if there's an app that can handle this intent
-                if (intent.resolveActivity(requireActivity().getPackageManager()) != null) {
-                    startActivity(intent);
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                // Safer: use requireContext() in Fragment
+                if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+                    // Let user choose if multiple browsers are installed
+                    Intent chooser = Intent.createChooser(intent, "Open with");
+                    startActivity(chooser);
                 } else {
-                    // Show error message if no browser is available
-                    Toast.makeText(getContext(), "No browser found to open the link", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "No browser found to open the link", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception e) {
-            // Handle any errors
-            String deptName = departmentIndex < departments.length ? departments[departmentIndex].name : "Department";
-            Toast.makeText(getContext(), "Error opening " + deptName + " question papers", Toast.LENGTH_SHORT).show();
+            String deptName = (departmentIndex >= 0 && departmentIndex < departments.length)
+                    ? departments[departmentIndex].name
+                    : "Department";
+            Toast.makeText(requireContext(), "Error opening " + deptName + " question papers", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
