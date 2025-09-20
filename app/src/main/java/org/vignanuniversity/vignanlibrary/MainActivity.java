@@ -6,20 +6,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import org.vignanuniversity.vignanlibrary.Fragments.BorrowFragment;
+
 import org.vignanuniversity.vignanlibrary.Fragments.CatalogFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.HomeFragment;
+import org.vignanuniversity.vignanlibrary.LoginSignup.AboutUsActivity;
 import org.vignanuniversity.vignanlibrary.LoginSignup.Change_pasword;
 import org.vignanuniversity.vignanlibrary.LoginSignup.LoginActivity;
-import org.vignanuniversity.vignanlibrary.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(android.graphics.Color.parseColor("#CC6442"));
@@ -95,29 +94,42 @@ public class MainActivity extends AppCompatActivity {
             // Handle Change Password
             startActivity(new Intent(getApplicationContext(), Change_pasword.class));
             return true;
-
         }
         else if (id == R.id.menu_logout) {
             // Handle Logout
             handleLogout();
             return true;
+        } else if (id == R.id.menu_about_us) {
+            startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
+            return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void handleLogout() {
-        SharedPreferences preferences = getSharedPreferences("LOGIN_PREFS", Context.MODE_PRIVATE);
+        // Clear the main SharedPreferences used by ProfileFragment
+        SharedPreferences preferences = getSharedPreferences("pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLogin", false);
-        editor.putString("regno", "");
+        editor.clear();
         editor.apply();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("CACHE_PREFS", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor1 = sharedPreferences.edit();
-        editor1.clear();
-        editor1.apply();
+        // Clear LOGIN_PREFS if you're using it elsewhere
+        SharedPreferences loginPrefs = getSharedPreferences("LOGIN_PREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor loginEditor = loginPrefs.edit();
+        loginEditor.clear();
+        loginEditor.apply();
 
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        // Clear CACHE_PREFS
+        SharedPreferences cachePrefs = getSharedPreferences("CACHE_PREFS", Context.MODE_PRIVATE);
+        SharedPreferences.Editor cacheEditor = cachePrefs.edit();
+        cacheEditor.clear();
+        cacheEditor.apply();
+
+        // Navigate to LoginActivity
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }
-
