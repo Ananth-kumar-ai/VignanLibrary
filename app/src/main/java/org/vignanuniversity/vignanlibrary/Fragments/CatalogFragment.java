@@ -91,8 +91,17 @@ public class CatalogFragment extends Fragment {
     private void openEBooksWebsite() {
         try {
             String ebooksUrl = "http://192.168.10.34:8080/jspui/handle/123456789/46";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ebooksUrl));
-            startActivity(intent);
+            if (isAdded()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ebooksUrl));
+                if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(requireContext(),
+                            "No browser available to open E-Books.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
         } catch (Exception e) {
             // Handle case where no browser is available
             if (getContext() != null) {
@@ -119,10 +128,11 @@ public class CatalogFragment extends Fragment {
     }
 
     private void showComingSoonMessage(String feature) {
-        if (getContext() != null) {
-            Toast.makeText(getContext(),
+        if (isAdded()) {
+            Toast.makeText(requireContext(),
                     feature + " coming soon!",
                     Toast.LENGTH_SHORT).show();
         }
+
     }
 }

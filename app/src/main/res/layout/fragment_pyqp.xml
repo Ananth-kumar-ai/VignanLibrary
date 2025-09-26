@@ -28,12 +28,6 @@
                 android:padding="24dp"
                 android:gravity="center">
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_document"
-                    android:layout_marginBottom="16dp"
-                    app:tint="#4A90E2" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -141,14 +135,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_agriculture"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -182,13 +168,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_car"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -233,12 +212,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_biotech"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -274,12 +247,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_biotech"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -324,12 +291,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_biotech"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -365,12 +326,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_chemistry"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -415,13 +370,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_building"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -455,13 +403,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_electrical"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -506,13 +447,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_electronics"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -547,12 +481,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_food"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -597,12 +525,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_information"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -638,12 +560,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_mechanical"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -688,12 +604,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_petroleum"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -729,12 +639,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_robotics"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -778,14 +682,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_textile"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -855,12 +751,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_computer"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -896,12 +786,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_data"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -946,13 +830,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_ai"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -987,12 +864,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_computer"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1037,12 +908,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_computer"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1078,12 +943,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_computer"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1125,13 +984,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_computer"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1194,13 +1046,6 @@
                     android:gravity="center"
                     android:padding="16dp">
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_business"
-                        android:layout_marginBottom="8dp"
-                        app:tint="#FFFFFF" />
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1233,12 +1078,6 @@
                     android:gravity="center"
                     android:padding="16dp">
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_mba"
-                        android:layout_marginBottom="8dp"
-                        app:tint="#FFFFFF" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1293,12 +1132,6 @@
                     android:gravity="center"
                     android:padding="16dp">
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_law"
-                        android:layout_marginBottom="8dp"
-                        app:tint="#FFFFFF" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1332,12 +1165,6 @@
                     android:gravity="center"
                     android:padding="16dp">
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_law"
-                        android:layout_marginBottom="8dp"
-                        app:tint="#FFFFFF" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1398,13 +1225,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_science"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -1437,12 +1257,6 @@
                         android:gravity="center"
                         android:padding="16dp">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_agriculture"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1486,13 +1300,6 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_chemistry"
-                            android:layout_marginBottom="8dp"
-                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1556,13 +1363,6 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_pharmacy"
-                        android:layout_marginBottom="8dp"
-                        app:tint="#FFFFFF" />
 
                     <TextView
                         android:layout_width="match_parent"

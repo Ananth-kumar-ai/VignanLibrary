@@ -101,10 +101,12 @@ public class BorrowFragment extends Fragment {
     private void showPopup(BorrowedBook book) {
         String msg = "Date of Issue: " + (book.dateOfIssue == null ? "--" : book.dateOfIssue) +
                 "\nDate of Return: " + (book.dateOfReturn == null ? "--" : book.dateOfReturn);
-        new AlertDialog.Builder(requireContext())
-                .setTitle(book.title)
-                .setMessage(msg)
-                .setPositiveButton("OK", null)
-                .show();
+        if (isAdded()) {
+            new AlertDialog.Builder(requireContext())
+                    .setTitle(book.title)
+                    .setMessage(msg)
+                    .setPositiveButton("OK", null)
+                    .show();
+        }
     }
 }

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import org.vignanuniversity.vignanlibrary.R;
 import java.util.List;
-
 public class BorrowedBookAdapter extends RecyclerView.Adapter<BorrowedBookAdapter.BookViewHolder> {
     private final List<BorrowedBook> books;
     private final Context context;
