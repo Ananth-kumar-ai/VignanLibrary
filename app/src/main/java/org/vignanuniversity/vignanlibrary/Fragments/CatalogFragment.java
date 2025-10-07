@@ -1,5 +1,5 @@
 package org.vignanuniversity.vignanlibrary.Fragments;
-
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import org.vignanuniversity.vignanlibrary.R;
 public class CatalogFragment extends Fragment {
 
     private CardView cardBooks, cardEbooks, cardPYQP;
+    private static final String EBOOKS_URL = "http://160.187.169.16:8080/jspui/handle/123456789/46";
 
     @Nullable
     @Override
@@ -73,7 +74,7 @@ public class CatalogFragment extends Fragment {
 
         // Pass API URL to BooksFragment
         Bundle args = new Bundle();
-        args.putString("api_url", "http://192.168.10.25/jspapi/library/basedOnaccno.jsp");
+        args.putString("api_url", "http://160.187.169.14/jspapi/library/basedOnaccno.jsp");
         booksFragment.setArguments(args);
 
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -90,26 +91,35 @@ public class CatalogFragment extends Fragment {
 
     private void openEBooksWebsite() {
         try {
-            String ebooksUrl = "http://192.168.10.34:8080/jspui/handle/123456789/46";
-            if (isAdded()) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ebooksUrl));
-                if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(requireContext(),
-                            "No browser available to open E-Books.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(EBOOKS_URL));
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
-        } catch (Exception e) {
-            // Handle case where no browser is available
-            if (getContext() != null) {
-                Toast.makeText(getContext(),
-                        "Unable to open E-Books. Please check your internet connection.",
+        } catch (ActivityNotFoundException e) {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "No browser found. Opening inside app...",
                         Toast.LENGTH_SHORT).show();
+                openEBooksInWebView();
+            }
+        } catch (Exception e) {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "Unable to open in browser. Opening inside app...",
+                        Toast.LENGTH_SHORT).show();
+                openEBooksInWebView();
             }
         }
+    }
+
+    private void openEBooksInWebView() {
+        EBooksWebViewFragment webViewFragment = EBooksWebViewFragment.newInstance(EBOOKS_URL);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, webViewFragment);
+        transaction.addToBackStack("EBooksWebView");
+        transaction.commit();
     }
 
     private void navigateToPYQPFragment() {
@@ -125,14 +135,5 @@ public class CatalogFragment extends Fragment {
         transaction.replace(R.id.fragment_container, pyqpFragment);
         transaction.addToBackStack("PYQPFragment");
         transaction.commit();
-    }
-
-    private void showComingSoonMessage(String feature) {
-        if (isAdded()) {
-            Toast.makeText(requireContext(),
-                    feature + " coming soon!",
-                    Toast.LENGTH_SHORT).show();
-        }
-
     }
 }

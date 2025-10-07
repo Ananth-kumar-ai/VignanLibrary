@@ -25,7 +25,7 @@ import java.util.List;
 
 public class PYQPFragment extends Fragment {
 
-    private static final String BASE_URL = "http://192.168.10.34:8080/jspui/handle/123456789/";
+    private static final String BASE_URL = "http://160.187.169.16:8080/jspui/handle/123456789/";
 
     private EditText searchEditText;
 
