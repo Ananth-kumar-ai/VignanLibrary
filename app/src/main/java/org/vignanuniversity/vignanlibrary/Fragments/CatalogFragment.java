@@ -18,8 +18,9 @@ import org.vignanuniversity.vignanlibrary.R;
 
 public class CatalogFragment extends Fragment {
 
-    private CardView cardBooks, cardEbooks, cardPYQP;
+    private CardView cardBooks, cardEbooks, cardPYQP, cardWebsiteLink;
     private static final String EBOOKS_URL = "http://160.187.169.16:8080/jspui/handle/123456789/46";
+    private static final String LIBRARY_PORTAL_URL = "http://160.187.169.16:8080/jspui/";
 
     @Nullable
     @Override
@@ -36,6 +37,7 @@ public class CatalogFragment extends Fragment {
         cardBooks = view.findViewById(R.id.cardBooks);
         cardEbooks = view.findViewById(R.id.cardEbooks);
         cardPYQP = view.findViewById(R.id.cardPYQP);
+        cardWebsiteLink = view.findViewById(R.id.cardWebsiteLink);
     }
 
     private void setupClickListeners() {
@@ -52,6 +54,11 @@ public class CatalogFragment extends Fragment {
         cardPYQP.setOnClickListener(v -> {
             animateCard(cardPYQP);
             navigateToPYQPFragment();
+        });
+
+        cardWebsiteLink.setOnClickListener(v -> {
+            animateCard(cardWebsiteLink);
+            openLibraryPortal();
         });
     }
 
@@ -119,6 +126,39 @@ public class CatalogFragment extends Fragment {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, webViewFragment);
         transaction.addToBackStack("EBooksWebView");
+        transaction.commit();
+    }
+
+    private void openLibraryPortal() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(LIBRARY_PORTAL_URL));
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        } catch (ActivityNotFoundException e) {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "No browser found. Opening inside app...",
+                        Toast.LENGTH_SHORT).show();
+                openLibraryPortalInWebView();
+            }
+        } catch (Exception e) {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "Unable to open in browser. Opening inside app...",
+                        Toast.LENGTH_SHORT).show();
+                openLibraryPortalInWebView();
+            }
+        }
+    }
+
+    private void openLibraryPortalInWebView() {
+        EBooksWebViewFragment webViewFragment = EBooksWebViewFragment.newInstance(LIBRARY_PORTAL_URL);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, webViewFragment);
+        transaction.addToBackStack("LibraryPortalWebView");
         transaction.commit();
     }
 

@@ -30,13 +30,21 @@ import java.util.Calendar;
 
 public class ProfileFragment extends Fragment {
 
+    private static final String TAG = "ProfileFragment";
+
+    // Personal Details API
     private static final String PERSONAL_DETAILS_URL_TEMPLATE =
             "http://160.187.169.12/jspapi/personal_details.jsp?regno=%s";
+
+    // Student Photo API
     private static final String STUDENT_PHOTO_URL_TEMPLATE =
             "http://160.187.169.14/jspapi/photos/%s.JPG";
 
-    private static final String ACADEMIC_DETAILS_URL_TEMPLATE =
-            "http://160.187.169.14/jspapi/personal_details.jsp?regno=%s";
+    // Library APIs
+    private static final String LIBRARY_STUDENT_DETAILS_URL =
+            "http://192.168.10.25/jspapi/library/student_details.jsp?regno=%s";
+    private static final String LIBRARY_BOOK_COUNT_URL =
+            "http://192.168.10.25/jspapi/library/bcount.jsp?regno=%s";
 
     private FragmentProfileBinding binding;
     private RequestQueue requestQueue;
@@ -60,9 +68,14 @@ public class ProfileFragment extends Fragment {
         String regno = sharedPreferences.getString("regno", null);
 
         if (regno != null && !regno.isEmpty()) {
+            Log.d(TAG, "Loading profile for regno: " + regno);
             setLoadingStates();
             fetchStudentDetails(regno);
             loadStudentImage(regno);
+
+            // IMPORTANT: Call fetchLibraryStatus FIRST to get both accid AND total books
+            // Then call fetchBookCount separately if needed
+            fetchLibraryStatusAndCount(regno);
         } else {
             Toast.makeText(getContext(),
                     "Could not find student login information.",
@@ -78,6 +91,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setLoadingStates() {
+        // Academic Information Loading States
         binding.tvStudentName.setText("Loading...");
         binding.tvRegno.setText("Loading...");
         binding.tvYear.setText("Loading...");
@@ -86,16 +100,24 @@ public class ProfileFragment extends Fragment {
         binding.tvEmail.setText("Loading...");
         binding.tvPhone.setText("Loading...");
 
-
+        // Library Status Loading States
+        binding.tvAccid.setText("Loading...");
+        binding.tvTotalBooks.setText("Loading...");
+        binding.tvBooksToReturn.setText("Loading...");
     }
 
+    /**
+     * Fetch student personal and academic details
+     */
     private void fetchStudentDetails(String regno) {
         String url = String.format(PERSONAL_DETAILS_URL_TEMPLATE, regno);
+        Log.d(TAG, "Fetching student details from: " + url);
 
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.GET, url, null,
                         response -> {
                             try {
+                                Log.d(TAG, "Student details response: " + response.toString());
                                 JSONArray dataArray = response.getJSONArray("data");
                                 if (dataArray.length() > 0) {
                                     JSONObject studentData = dataArray.getJSONObject(0);
@@ -104,12 +126,11 @@ public class ProfileFragment extends Fragment {
                                     String branch = studentData.optString("branch", "N/A");
                                     String registrationNo = studentData.optString("regno", "N/A");
 
-                                    // ✅ Fixed email & phone
                                     String department = studentData.optString("department", "School of Computing");
                                     String email = studentData.optString("studentemailid", generateEmail(registrationNo));
                                     String phone = studentData.optString("studentmobile", "+91 XXXXXXXXXX");
 
-                                    // ✅ Get cyear if present, else fallback
+                                    // Determine year
                                     String cyear = studentData.optString("cyear", "");
                                     String year;
                                     if (!cyear.isEmpty()) {
@@ -123,35 +144,122 @@ public class ProfileFragment extends Fragment {
                                         year = studentData.optString("year", determineYear(registrationNo));
                                     }
 
-                                    String cgpa = studentData.optString("cgpa", "8.5");
-                                    String credits = studentData.optString("credits", "120");
-                                    String rank = studentData.optString("rank", "--");
-
                                     updateUIWithStudentData(
                                             name, branch, registrationNo, department,
-                                            email, phone, year, cgpa, credits, rank
+                                            email, phone, year
                                     );
+
+                                    Log.d(TAG, "Student details fetched successfully for: " + name);
 
                                 } else {
                                     showErrorAndSetDefaults("No student data found.");
                                 }
                             } catch (JSONException e) {
-                                Log.e("ProfileFragment", "JSON parsing error", e);
+                                Log.e(TAG, "JSON parsing error", e);
                                 showErrorAndSetDefaults("Failed to parse student data.");
                             }
                         },
                         error -> {
-                            Log.e("ProfileFragment", "Volley error", error);
+                            Log.e(TAG, "Volley error fetching student details", error);
+                            if (error.networkResponse != null) {
+                                Log.e(TAG, "Error status code: " + error.networkResponse.statusCode);
+                            }
                             showErrorAndSetDefaults("Network error fetching details.");
                         });
 
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void updateUIWithStudentData(String name, String branch, String regno, String department,
-                                         String email, String phone, String year, String cgpa,
-                                         String credits, String rank) {
+    /**
+     * COMBINED METHOD: Fetch library status, total books, and books to return
+     * This method gets ALL the data from student_details API
+     */
+    private void fetchLibraryStatusAndCount(String regno) {
+        String url = String.format(LIBRARY_STUDENT_DETAILS_URL, regno);
+        Log.d(TAG, "Fetching library data from: " + url);
 
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(Request.Method.GET, url, null,
+                        response -> {
+                            try {
+                                Log.d(TAG, "Library data response: " + response.toString());
+                                JSONArray dataArray = response.getJSONArray("data");
+
+                                if (dataArray.length() > 0) {
+                                    // Get accid from first record
+                                    JSONObject firstRecord = dataArray.getJSONObject(0);
+                                    String accid = firstRecord.optString("accid", "N/A");
+                                    binding.tvAccid.setText(accid);
+                                    Log.d(TAG, "Account ID: " + accid);
+
+                                    // TOTAL BOOKS = Total number of records in the array
+                                    int totalBooks = dataArray.length();
+                                    binding.tvTotalBooks.setText(String.valueOf(totalBooks));
+                                    Log.d(TAG, "Total Books Issued: " + totalBooks);
+
+                                    // Count books to return (where dateofreturn is NOT "00/00/000")
+                                    int booksToReturn = 0;
+                                    for (int i = 0; i < dataArray.length(); i++) {
+                                        JSONObject book = dataArray.getJSONObject(i);
+                                        String dateOfReturn = book.optString("dateofreturn", "00/00/000");
+
+                                        // Log each book's return date for debugging
+                                        Log.d(TAG, "Book " + (i+1) + " dateofreturn: " + dateOfReturn);
+
+                                        // Count if dateofreturn exists and is NOT "00/00/000"
+                                        if (!dateOfReturn.isEmpty() &&
+                                                !dateOfReturn.equals("00/00/000") &&
+                                                !dateOfReturn.equals("null") &&
+                                                !dateOfReturn.trim().equals("")) {
+                                            booksToReturn++;
+                                            Log.d(TAG, "  -> Book to return found!");
+                                        }
+                                    }
+
+                                    binding.tvBooksToReturn.setText(String.valueOf(booksToReturn));
+                                    Log.d(TAG, "Books to Return: " + booksToReturn);
+
+                                    Log.d(TAG, "=== SUMMARY ===");
+                                    Log.d(TAG, "Account ID: " + accid);
+                                    Log.d(TAG, "Total Books: " + totalBooks);
+                                    Log.d(TAG, "Books to Return: " + booksToReturn);
+
+                                } else {
+                                    // No library records found
+                                    binding.tvAccid.setText("No Data");
+                                    binding.tvTotalBooks.setText("0");
+                                    binding.tvBooksToReturn.setText("0");
+                                    Log.d(TAG, "No library records found");
+                                }
+                            } catch (JSONException e) {
+                                Log.e(TAG, "JSON parsing error in library data", e);
+                                binding.tvAccid.setText("Error");
+                                binding.tvTotalBooks.setText("--");
+                                binding.tvBooksToReturn.setText("--");
+                            }
+                        },
+                        error -> {
+                            Log.e(TAG, "Error fetching library data", error);
+                            if (error.networkResponse != null) {
+                                Log.e(TAG, "Library data error code: " + error.networkResponse.statusCode);
+                            }
+                            binding.tvAccid.setText("N/A");
+                            binding.tvTotalBooks.setText("--");
+                            binding.tvBooksToReturn.setText("--");
+                            Toast.makeText(getContext(),
+                                    "Could not fetch library data",
+                                    Toast.LENGTH_SHORT).show();
+                        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    /**
+     * Update UI with student academic data
+     */
+    private void updateUIWithStudentData(String name, String branch, String regno,
+                                         String department, String email, String phone,
+                                         String year) {
         binding.tvStudentName.setText(name);
         binding.tvRegno.setText(regno);
         binding.tvYear.setText(year);
@@ -160,11 +268,12 @@ public class ProfileFragment extends Fragment {
         binding.tvEmail.setText(email);
         binding.tvPhone.setText(phone);
 
-
-
-        Log.d("ProfileFragment", "UI updated successfully with student data");
+        Log.d(TAG, "UI updated with student data for: " + name);
     }
 
+    /**
+     * Show error and set default values
+     */
     private void showErrorAndSetDefaults(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
 
@@ -177,6 +286,9 @@ public class ProfileFragment extends Fragment {
         binding.tvYear.setText("Year");
     }
 
+    /**
+     * Generate email from registration number
+     */
     private String generateEmail(String regno) {
         if (regno != null && !regno.isEmpty()) {
             return regno.toLowerCase() + "@vignan.ac.in";
@@ -184,6 +296,9 @@ public class ProfileFragment extends Fragment {
         return "email@vignan.ac.in";
     }
 
+    /**
+     * Determine year from registration number
+     */
     private String determineYear(String regno) {
         if (regno != null && regno.length() >= 5) {
             try {
@@ -196,13 +311,15 @@ public class ProfileFragment extends Fragment {
                     return academicYear + getYearSuffix(academicYear) + " Year";
                 }
             } catch (Exception e) {
-                Log.e("ProfileFragment",
-                        "Error determining year from regno: " + regno, e);
+                Log.e(TAG, "Error determining year from regno: " + regno, e);
             }
         }
         return "N/A";
     }
 
+    /**
+     * Get year suffix (st, nd, rd, th)
+     */
     private String getYearSuffix(int year) {
         switch (year) {
             case 1: return "st";
@@ -212,6 +329,9 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Load student profile image
+     */
     private void loadStudentImage(String regno) {
         String imageUrl = String.format(STUDENT_PHOTO_URL_TEMPLATE, regno);
 
@@ -221,8 +341,13 @@ public class ProfileFragment extends Fragment {
                 .placeholder(R.drawable.ic_profile_placeholder)
                 .error(R.drawable.ic_profile_placeholder)
                 .into(binding.profileImage);
+
+        Log.d(TAG, "Loading profile image from: " + imageUrl);
     }
 
+    /**
+     * Logout user and clear session
+     */
     private void logoutUser() {
         SharedPreferences sharedPreferences =
                 requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
@@ -234,6 +359,8 @@ public class ProfileFragment extends Fragment {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         requireActivity().finish();
+
+        Log.d(TAG, "User logged out");
     }
 
     @Override
@@ -243,5 +370,6 @@ public class ProfileFragment extends Fragment {
             requestQueue.cancelAll(this);
         }
         binding = null;
+        Log.d(TAG, "ProfileFragment view destroyed");
     }
 }
