@@ -67,92 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     Button submit;
 
     LoadingDialog loadingDialog;
-//
-//    /**
-//     * Checks and requests all necessary permissions at runtime.
-//     */
-//    private void checkPermissions() {
-//        String[] permissions = {
-//                Manifest.permission.READ_PHONE_STATE,
-//                Manifest.permission.SEND_SMS,
-//                Manifest.permission.READ_SMS
-//        };
-//
-//        List<String> permissionsToRequest = new ArrayList<>();
-//        for (String permission : permissions) {
-//            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-//                permissionsToRequest.add(permission);
-//            }
-//        }
-//
-//        if (!permissionsToRequest.isEmpty()) {
-//            ActivityCompat.requestPermissions(
-//                    this,
-//                    permissionsToRequest.toArray(new String[0]),
-//                    PERMISSIONS_REQUEST_CODE
-//            );
-//        } else {
-//            getSimDetails();
-//        }
-//    }
-//
-//    /**
-//     * Handles the user's response to runtime permission requests.
-//     */
-//    @Override
-//    public void onRequestPermissionsResult(
-//            int requestCode,
-//            @NonNull String[] permissions,
-//            @NonNull int[] grantResults
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-//            boolean allGranted = true;
-//            for (int result : grantResults) {
-//                if (result != PackageManager.PERMISSION_GRANTED) {
-//                    allGranted = false;
-//                    break;
-//                }
-//            }
-//
-//            if (allGranted) {
-//                getSimDetails();
-//            } else {
-//                Toast.makeText(this, "Required permissions are denied.", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Attempts to fetch SIM details safely if permissions are granted.
-//     */
-//    private void getSimDetails() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-//            try {
-//                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-//                if (telephonyManager != null) {
-//                    String phoneNumber = telephonyManager.getLine1Number();
-//                    if (phoneNumber != null && !phoneNumber.isEmpty()) {
-//                        phone_number = phoneNumber;
-//                        Log.d("TAG", "Phone Number: " + phoneNumber);
-    ////                        Toast.makeText(this, "Phone Number: " + phoneNumber, Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Log.d("TAG", "Phone Number not available on SIM.");
-//                        Toast.makeText(this, "Phone Number not available on SIM", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Log.d("TAG", "TelephonyManager is null");
-//                    Toast.makeText(this, "Unable to fetch TelephonyManager", Toast.LENGTH_SHORT).show();
-//                }
-//            } catch (SecurityException e) {
-//                Log.d("TAG", "SecurityException: " + e.getMessage());
-//                Toast.makeText(this, "Error accessing phone state: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, "Phone state permissions are required.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,13 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-
-
-                /*if(user_type.isEmpty() || user_type.equals("Select Type of User")){
-                    ((TextView)type.getSelectedView()).setError("This field can not be blank");
-                    type.requestFocus();
-                    return;
-                }*/
                 else{
                     loadingDialog.load();
                     switch (user_type){
@@ -244,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(email.getText().toString().trim().equals("test") && password.getText().toString().equals("test")){
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putBoolean("isLogin",true);
-                                editor.putString("regno","211FA04389");
+                                editor.putString("regno","221FA18036");
                                 editor.apply();
                                 loadingDialog.dismisss();
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);

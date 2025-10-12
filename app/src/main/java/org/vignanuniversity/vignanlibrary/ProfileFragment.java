@@ -27,6 +27,7 @@ import org.vignanuniversity.vignanlibrary.LoginSignup.LoginActivity;
 import org.vignanuniversity.vignanlibrary.databinding.FragmentProfileBinding;
 
 import java.util.Calendar;
+import java.util.concurrent.Executors;
 
 public class ProfileFragment extends Fragment {
 
@@ -174,6 +175,9 @@ public class ProfileFragment extends Fragment {
      * COMBINED METHOD: Fetch library status, total books, and books to return
      * This method gets ALL the data from student_details API
      */
+    /**
+     * Fetch library status, total books, and count of books not yet returned
+     */
     private void fetchLibraryStatusAndCount(String regno) {
         String url = String.format(LIBRARY_STUDENT_DETAILS_URL, regno);
         Log.d(TAG, "Fetching library data from: " + url);
@@ -181,62 +185,54 @@ public class ProfileFragment extends Fragment {
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.GET, url, null,
                         response -> {
-                            try {
-                                Log.d(TAG, "Library data response: " + response.toString());
-                                JSONArray dataArray = response.getJSONArray("data");
-
-                                if (dataArray.length() > 0) {
-                                    // Get accid from first record
-                                    JSONObject firstRecord = dataArray.getJSONObject(0);
-                                    String accid = firstRecord.optString("accid", "N/A");
-                                    binding.tvAccid.setText(accid);
-                                    Log.d(TAG, "Account ID: " + accid);
-
-                                    // TOTAL BOOKS = Total number of records in the array
+                            // Parse data off the UI thread
+                            Executors.newSingleThreadExecutor().execute(() -> {
+                                try {
+                                    JSONArray dataArray = response.getJSONArray("data");
                                     int totalBooks = dataArray.length();
-                                    binding.tvTotalBooks.setText(String.valueOf(totalBooks));
-                                    Log.d(TAG, "Total Books Issued: " + totalBooks);
-
-                                    // Count books to return (where dateofreturn is NOT "00/00/000")
+                                    String accid = "N/A";
                                     int booksToReturn = 0;
-                                    for (int i = 0; i < dataArray.length(); i++) {
-                                        JSONObject book = dataArray.getJSONObject(i);
-                                        String dateOfReturn = book.optString("dateofreturn", "00/00/000");
 
-                                        // Log each book's return date for debugging
-                                        Log.d(TAG, "Book " + (i+1) + " dateofreturn: " + dateOfReturn);
+                                    if (totalBooks > 0) {
+                                        JSONObject firstRecord = dataArray.getJSONObject(0);
+                                        accid = firstRecord.optString("accid", "N/A");
 
-                                        // Count if dateofreturn exists and is NOT "00/00/000"
-                                        if (!dateOfReturn.isEmpty() &&
-                                                !dateOfReturn.equals("00/00/000") &&
-                                                !dateOfReturn.equals("null") &&
-                                                !dateOfReturn.trim().equals("")) {
-                                            booksToReturn++;
-                                            Log.d(TAG, "  -> Book to return found!");
+                                        for (int i = 0; i < totalBooks; i++) {
+                                            JSONObject book = dataArray.getJSONObject(i);
+                                            String dateOfReturn = book.optString("dateofreturn", "").trim();
+
+                                            if (dateOfReturn.equals("0000/00/00") ||
+                                                    dateOfReturn.equals("00/00/0000") ||
+                                                    dateOfReturn.equals("0000/00/00")) {
+                                                booksToReturn++;
+                                            }
                                         }
                                     }
 
-                                    binding.tvBooksToReturn.setText(String.valueOf(booksToReturn));
-                                    Log.d(TAG, "Books to Return: " + booksToReturn);
+                                    String finalAccid = accid;
+                                    int finalTotalBooks = totalBooks;
+                                    int finalBooksToReturn = booksToReturn;
 
-                                    Log.d(TAG, "=== SUMMARY ===");
-                                    Log.d(TAG, "Account ID: " + accid);
-                                    Log.d(TAG, "Total Books: " + totalBooks);
-                                    Log.d(TAG, "Books to Return: " + booksToReturn);
+                                    // Post UI updates back to the main thread
+                                    requireActivity().runOnUiThread(() -> {
+                                        binding.tvAccid.setText(finalAccid);
+                                        binding.tvTotalBooks.setText(String.valueOf(finalTotalBooks));
+                                        binding.tvBooksToReturn.setText(String.valueOf(finalBooksToReturn));
+                                    });
 
-                                } else {
-                                    // No library records found
-                                    binding.tvAccid.setText("No Data");
-                                    binding.tvTotalBooks.setText("0");
-                                    binding.tvBooksToReturn.setText("0");
-                                    Log.d(TAG, "No library records found");
+                                    Log.d(TAG, "Library Data: accid=" + accid +
+                                            ", total=" + totalBooks +
+                                            ", pending=" + booksToReturn);
+
+                                } catch (JSONException e) {
+                                    Log.e(TAG, "JSON parse error", e);
+                                    requireActivity().runOnUiThread(() -> {
+                                        binding.tvAccid.setText("Error");
+                                        binding.tvTotalBooks.setText("--");
+                                        binding.tvBooksToReturn.setText("--");
+                                    });
                                 }
-                            } catch (JSONException e) {
-                                Log.e(TAG, "JSON parsing error in library data", e);
-                                binding.tvAccid.setText("Error");
-                                binding.tvTotalBooks.setText("--");
-                                binding.tvBooksToReturn.setText("--");
-                            }
+                            });
                         },
                         error -> {
                             Log.e(TAG, "Error fetching library data", error);
@@ -253,6 +249,7 @@ public class ProfileFragment extends Fragment {
 
         requestQueue.add(jsonObjectRequest);
     }
+
 
     /**
      * Update UI with student academic data

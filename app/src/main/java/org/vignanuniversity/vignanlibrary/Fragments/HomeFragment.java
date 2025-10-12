@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     // API URLs
     private static final String COUNT_API_URL = "http://160.187.169.14/jspapi/library/count.jsp";
     private static final String UCOUNT_API_URL = "http://160.187.169.14/jspapi/library/ucount.jsp";
-    private static final String LIBRARY_INFO_URL = "https://vignan.ac.in/newvignan/library.php";
+    private static final String LIBRARY_INFO_URL = "https://vignan.ac.in/newvignan/ .php";
 
     // Declare CardViews - Now 8 cards total (header + 6 statistics + more info)
     private CardView headerCard, totalBooksCard, notIssuedBooksCard, issuedBooksCard;

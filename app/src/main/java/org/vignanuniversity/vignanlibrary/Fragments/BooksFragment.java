@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -41,8 +42,8 @@ public class BooksFragment extends Fragment {
     private LinearLayout layoutEmptyState, layoutLoadingState;
 
     private BookAdapter bookAdapter;
-    private List<Book> allBooks;
-    private List<Book> filteredBooks;
+    private final List<Book> allBooks = new ArrayList<>();
+    private final List<Book> filteredBooks = new ArrayList<>();
 
     private String apiUrl;
     private RequestQueue requestQueue;
@@ -55,7 +56,6 @@ public class BooksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_books, container, false);
 
-        // Get API URL from arguments
         if (getArguments() != null) {
             apiUrl = getArguments().getString("api_url", "");
         }
@@ -67,6 +67,7 @@ public class BooksFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(requireContext());
         searchHandler = new Handler();
+
         loadBooks();
 
         return view;
@@ -81,8 +82,6 @@ public class BooksFragment extends Fragment {
         recyclerViewBooks = view.findViewById(R.id.recyclerViewBooks);
         layoutEmptyState = view.findViewById(R.id.layoutEmptyState);
         layoutLoadingState = view.findViewById(R.id.layoutLoadingState);
-
-        // Empty state views
         tvEmptyStateIcon = view.findViewById(R.id.tvEmptyStateIcon);
         tvEmptyStateTitle = view.findViewById(R.id.tvEmptyStateTitle);
         tvEmptyStateMessage = view.findViewById(R.id.tvEmptyStateMessage);
@@ -98,45 +97,28 @@ public class BooksFragment extends Fragment {
 
     private void setupRecyclerView() {
         recyclerViewBooks.setLayoutManager(new LinearLayoutManager(getContext()));
-        allBooks = new ArrayList<>();
-        filteredBooks = new ArrayList<>();
-
         bookAdapter = new BookAdapter(filteredBooks);
         recyclerViewBooks.setAdapter(bookAdapter);
     }
 
     private void setupSearch() {
-        // Clear search button
         ivClearSearch.setOnClickListener(v -> {
             etSearch.setText("");
             etSearch.clearFocus();
         });
 
-        // Search functionality with debouncing
         etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Show/hide clear button
                 ivClearSearch.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
-
-                // Cancel previous search
-                if (searchRunnable != null) {
-                    searchHandler.removeCallbacks(searchRunnable);
-                }
-
-                // Schedule new search with delay
-                searchRunnable = () -> filterBooks();
-                searchHandler.postDelayed(searchRunnable, 300); // 300ms delay
+                if (searchRunnable != null) searchHandler.removeCallbacks(searchRunnable);
+                searchRunnable = BooksFragment.this::filterBooks;
+                searchHandler.postDelayed(searchRunnable, 300);
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
+            @Override public void afterTextChanged(Editable s) {}
         });
 
-        // Handle search action from keyboard
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 filterBooks();
@@ -147,69 +129,75 @@ public class BooksFragment extends Fragment {
     }
 
     private void loadBooks() {
+        if (apiUrl == null || apiUrl.trim().isEmpty()) {
+            showError("Invalid API URL");
+            updateEmptyState();
+            return;
+        }
+
         showLoading(true);
         allBooks.clear();
         filteredBooks.clear();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
                 response -> {
-                    try {
-                        JSONArray dataArray = response.getJSONArray("data");
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            JSONObject obj = dataArray.getJSONObject(i);
+                    if (!isAdded()) return;
 
-                            String title = obj.optString("Title", "Unknown Title");
-                            String publisher = obj.optString("Publisher", "Unknown Publisher");
-                            String edition = obj.optString("Edition", "Unknown Edition");
-                            String department = obj.optString("Department", "Unknown Department");
+                    JSONArray dataArray = response.optJSONArray("data");
+                    if (dataArray == null) dataArray = new JSONArray();
 
-                            Book book = new Book(title, publisher, edition, department);
-                            allBooks.add(book);
-                        }
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject obj = dataArray.optJSONObject(i);
+                        if (obj == null) continue;
 
-                        // Copy all books to filtered list initially
-                        filteredBooks.addAll(allBooks);
-                        bookAdapter.notifyDataSetChanged();
-                        updateBookCount();
-                        showLoading(false);
+                        String title = obj.optString("Title", "Unknown Title");
+                        String publisher = obj.optString("Publisher", "Unknown Publisher");
+                        String edition = obj.optString("Edition", "Unknown Edition");
+                        String department = obj.optString("Department", "Unknown Department");
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        showError("Error parsing book data");
-                        showLoading(false);
+                        allBooks.add(new Book(title, publisher, edition, department));
                     }
+
+                    filteredBooks.addAll(allBooks);
+                    bookAdapter.notifyDataSetChanged();
+                    updateBookCount();
+                    showLoading(false);
                 },
                 error -> {
-                    showError("Failed to fetch books. Please check your connection.");
+                    if (!isAdded()) return;
+                    showError("Failed to load books. Please check your internet connection.");
                     showLoading(false);
                 });
+
+        // ✅ Prevent infinite waits
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000, // 5s timeout
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(request);
     }
 
-    private void filterBooks() {
-        String searchQuery = etSearch.getText().toString().toLowerCase().trim();
 
+    private void filterBooks() {
+        if (!isAdded()) return;
+        String searchQuery = etSearch.getText().toString().toLowerCase().trim();
         filteredBooks.clear();
 
         if (searchQuery.isEmpty()) {
-            // If search is empty, show all books
             filteredBooks.addAll(allBooks);
             tvSearchResults.setVisibility(View.GONE);
         } else {
-            // Filter books based on search query
             for (Book book : allBooks) {
-                if (book.getTitle().toLowerCase().contains(searchQuery) ||
-                        book.getPublisher().toLowerCase().contains(searchQuery) ||
-                        book.getDepartment().toLowerCase().contains(searchQuery) ||
-                        book.getEdition().toLowerCase().contains(searchQuery)) {
+                if ((book.getTitle() != null && book.getTitle().toLowerCase().contains(searchQuery)) ||
+                        (book.getPublisher() != null && book.getPublisher().toLowerCase().contains(searchQuery)) ||
+                        (book.getDepartment() != null && book.getDepartment().toLowerCase().contains(searchQuery)) ||
+                        (book.getEdition() != null && book.getEdition().toLowerCase().contains(searchQuery))) {
                     filteredBooks.add(book);
                 }
             }
-
-            // Show search results count
             String resultText = filteredBooks.size() + " result" +
-                    (filteredBooks.size() == 1 ? "" : "s") + " found for \"" + searchQuery + "\"";
+                    (filteredBooks.size() == 1 ? "" : "s") + " for \"" + searchQuery + "\"";
             tvSearchResults.setText(resultText);
             tvSearchResults.setVisibility(View.VISIBLE);
         }
@@ -225,26 +213,20 @@ public class BooksFragment extends Fragment {
     }
 
     private void updateEmptyState() {
+        if (!isAdded()) return;
         if (filteredBooks.isEmpty()) {
             recyclerViewBooks.setVisibility(View.GONE);
             layoutEmptyState.setVisibility(View.VISIBLE);
-
             String searchQuery = etSearch.getText().toString().trim();
+
             if (!searchQuery.isEmpty()) {
-                // Search specific empty state
                 tvEmptyStateIcon.setText("🔍");
                 tvEmptyStateTitle.setText("No results found");
-                tvEmptyStateMessage.setText("Try searching with different keywords or check your spelling");
-            } else if (allBooks.isEmpty() && !isLoading) {
-                // No books loaded empty state
+                tvEmptyStateMessage.setText("Try a different keyword or check spelling.");
+            } else {
                 tvEmptyStateIcon.setText("📚");
                 tvEmptyStateTitle.setText("No books available");
-                tvEmptyStateMessage.setText("Books will appear here when loaded from the server");
-            } else {
-                // Default empty state
-                tvEmptyStateIcon.setText("📚");
-                tvEmptyStateTitle.setText("No books found");
-                tvEmptyStateMessage.setText("Try searching with different keywords");
+                tvEmptyStateMessage.setText("Books will appear here when loaded.");
             }
         } else {
             recyclerViewBooks.setVisibility(View.VISIBLE);
@@ -254,30 +236,27 @@ public class BooksFragment extends Fragment {
 
     private void showLoading(boolean show) {
         isLoading = show;
+        if (!isAdded()) return;
+        layoutLoadingState.setVisibility(show ? View.VISIBLE : View.GONE);
         if (show) {
-            layoutLoadingState.setVisibility(View.VISIBLE);
             recyclerViewBooks.setVisibility(View.GONE);
             layoutEmptyState.setVisibility(View.GONE);
         } else {
-            layoutLoadingState.setVisibility(View.GONE);
             updateEmptyState();
         }
     }
 
     private void showError(String message) {
-        if (getContext() != null) {
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        if (isAdded()) {
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (requestQueue != null) {
-            requestQueue.cancelAll(this);
-        }
-        if (searchHandler != null && searchRunnable != null) {
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (requestQueue != null) requestQueue.cancelAll(this);
+        if (searchHandler != null && searchRunnable != null)
             searchHandler.removeCallbacks(searchRunnable);
-        }
     }
 }

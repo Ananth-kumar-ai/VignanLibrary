@@ -4,9 +4,10 @@
     android:layout_height="wrap_content"
     android:elevation="6dp"
     android:layout_margin="8dp"
-    android:background="@android:color/white"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:backgroundTint="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,28 +15,44 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Book Title -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:text="Book Title" />
 
+        <!-- Department -->
         <TextView
             android:id="@+id/tvDepartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#555555"
             android:textStyle="italic"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:text="Department" />
 
+        <!-- Author -->
         <TextView
             android:id="@+id/tvAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="6dp"
+            android:text="Author: " />
+
+        <!-- ✅ New Publisher line -->
+        <TextView
+            android:id="@+id/tvPublisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="2dp"
+            android:text="Publisher: " />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

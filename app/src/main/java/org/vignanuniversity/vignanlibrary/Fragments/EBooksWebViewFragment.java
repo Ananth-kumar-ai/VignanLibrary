@@ -1,4 +1,6 @@
 package org.vignanuniversity.vignanlibrary.Fragments;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import org.vignanuniversity.vignanlibrary.R;
 
 public class EBooksWebViewFragment extends Fragment {
@@ -36,23 +39,36 @@ public class EBooksWebViewFragment extends Fragment {
         ProgressBar progressBar = root.findViewById(R.id.progressBar);
 
         if (getArguments() != null) {
-            ebooksUrl = getArguments().getString(ARG_URL);
+            ebooksUrl = getArguments().getString(ARG_URL, "");
+        }
+
+        if (ebooksUrl == null || ebooksUrl.isEmpty()) {
+            Toast.makeText(getContext(), "Invalid URL", Toast.LENGTH_SHORT).show();
+            return root;
         }
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient());
-        webView.setWebChromeClient(new WebChromeClient() {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress < 100) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setProgress(newProgress);
-                } else {
-                    progressBar.setVisibility(View.GONE);
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Failed to load page", Toast.LENGTH_SHORT).show();
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
 
+        webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl(ebooksUrl);
 
         return root;

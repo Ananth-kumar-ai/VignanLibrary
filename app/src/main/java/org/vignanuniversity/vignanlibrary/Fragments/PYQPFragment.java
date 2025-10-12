@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,30 +28,26 @@ public class PYQPFragment extends Fragment {
 
     private EditText searchEditText;
 
-    // Section headers
-    private TextView engineeringHeader;
-    private TextView computerScienceHeader;
-    private TextView businessHeader;
-    private TextView lawHeader;
-    private TextView scienceHeader;
-    private TextView pharmacyHeader;
+    private List<CardView> allCards;
+    private List<Department> allDepartments;
 
-    // Department data with names and URL IDs
+    private TextView engineeringHeader, computerScienceHeader, businessHeader,
+            lawHeader, scienceHeader, pharmacyHeader;
+
     private static class Department {
         String name;
         String urlId;
         String searchKeywords;
-        String section; // Added section categorization
+        String section;
 
         Department(String name, String urlId, String searchKeywords, String section) {
             this.name = name;
             this.urlId = urlId;
-            this.searchKeywords = searchKeywords.toLowerCase();
+            this.searchKeywords = searchKeywords != null ? searchKeywords.toLowerCase() : "";
             this.section = section;
         }
     }
 
-    // Department mapping with updated URLs and sections
     private final Department[] departments = {
             new Department("AGRICULTURE ENGINEERING", "2889", "agriculture engineering agri", "engineering"),
             new Department("AUTOMOBILE ENGINEERING", "2790", "automobile auto mobile car", "engineering"),
@@ -86,25 +81,20 @@ public class PYQPFragment extends Fragment {
             new Department("B - PHARMACY", "3515", "pharmacy pharmaceutical bachelor", "pharmacy")
     };
 
-    private List<CardView> allCards;
-    private List<Department> allDepartments;
-
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pyqp, container, false);
-
         initializeViews(view);
         setupDepartmentCards(view);
         setupSearch();
-
         return view;
     }
 
     private void initializeViews(View view) {
         searchEditText = view.findViewById(R.id.searchEditText);
 
-        // Initialize section headers - you'll need to add IDs to these TextView elements in your XML
         engineeringHeader = view.findViewById(R.id.engineeringHeader);
         computerScienceHeader = view.findViewById(R.id.computerScienceHeader);
         businessHeader = view.findViewById(R.id.businessHeader);
@@ -114,131 +104,37 @@ public class PYQPFragment extends Fragment {
 
         allCards = new ArrayList<>();
         allDepartments = new ArrayList<>();
-
-        // Convert array to list for easier searching
         for (Department dept : departments) {
             allDepartments.add(dept);
         }
     }
 
     private void setupDepartmentCards(View view) {
-        // Engineering Cards
-        CardView cardAgriculture = view.findViewById(R.id.cardAgriculture);
-        CardView cardAutomobile = view.findViewById(R.id.cardAutomobile);
-        CardView cardBioInformatics = view.findViewById(R.id.cardBioInformatics);
-        CardView cardBioMedical = view.findViewById(R.id.cardBioMedical);
-        CardView cardBioTechnology = view.findViewById(R.id.cardBioTechnology);
-        CardView cardChemical = view.findViewById(R.id.cardChemical);
-        CardView cardCivil = view.findViewById(R.id.cardCivil);
-        CardView cardElectrical = view.findViewById(R.id.cardElectrical);
-        CardView cardElectronics = view.findViewById(R.id.cardElectronics);
-        CardView cardFoodTech = view.findViewById(R.id.cardFoodTech);
-        CardView cardIT = view.findViewById(R.id.cardIT);
-        CardView cardMechanical = view.findViewById(R.id.cardMechanical);
-        CardView cardPetroleum = view.findViewById(R.id.cardPetroleum);
-        CardView cardRobotics = view.findViewById(R.id.cardRobotics);
-        CardView cardTextile = view.findViewById(R.id.cardTextile);
-
-        // Computer Science Cards
-        CardView cardCSE = view.findViewById(R.id.cardCSE);
-        CardView cardCSEDataScience = view.findViewById(R.id.cardCSEDataScience);
-        CardView cardCSEAIML = view.findViewById(R.id.cardCSEAIML);
-        CardView cardCSECS = view.findViewById(R.id.cardCSECS);
-        CardView cardCSECSBS = view.findViewById(R.id.cardCSECSBS);
-        CardView cardBCA = view.findViewById(R.id.cardBCA);
-        CardView cardMCA = view.findViewById(R.id.cardMCA);
-
-        // Business Cards
-        CardView cardBBA = view.findViewById(R.id.cardBBA);
-        CardView cardMBA = view.findViewById(R.id.cardMBA);
-
-        // Law Cards
-        CardView cardBALLB = view.findViewById(R.id.cardBALLB);
-        CardView cardBBALLB = view.findViewById(R.id.cardBBALLB);
-
-        // Science Cards
-        CardView cardBSC = view.findViewById(R.id.cardBSC);
-        CardView cardAgricultureBSC = view.findViewById(R.id.cardAgricultureBSC);
-        CardView cardMSCChemistry = view.findViewById(R.id.cardMSCChemistry);
-
-        // Pharmacy Cards
-        CardView cardBPharmacy = view.findViewById(R.id.cardBPharmacy);
-
-        // Add all cards to list for search functionality
-        allCards.add(cardAgriculture);
-        allCards.add(cardAutomobile);
-        allCards.add(cardBioInformatics);
-        allCards.add(cardBioMedical);
-        allCards.add(cardBioTechnology);
-        allCards.add(cardChemical);
-        allCards.add(cardCivil);
-        allCards.add(cardElectrical);
-        allCards.add(cardElectronics);
-        allCards.add(cardFoodTech);
-        allCards.add(cardIT);
-        allCards.add(cardMechanical);
-        allCards.add(cardPetroleum);
-        allCards.add(cardRobotics);
-        allCards.add(cardTextile);
-        allCards.add(cardCSE);
-        allCards.add(cardCSEDataScience);
-        allCards.add(cardCSEAIML);
-        allCards.add(cardCSECS);
-        allCards.add(cardCSECSBS);
-        allCards.add(cardBCA);
-        allCards.add(cardMCA);
-        allCards.add(cardBBA);
-        allCards.add(cardMBA);
-        allCards.add(cardBALLB);
-        allCards.add(cardBBALLB);
-        allCards.add(cardBSC);
-        allCards.add(cardAgricultureBSC);
-        allCards.add(cardMSCChemistry);
-        allCards.add(cardBPharmacy);
-
-        // Set click listeners
-        cardAgriculture.setOnClickListener(v -> openDepartmentUrl(0));
-        cardAutomobile.setOnClickListener(v -> openDepartmentUrl(1));
-        cardBioInformatics.setOnClickListener(v -> openDepartmentUrl(2));
-        cardBioMedical.setOnClickListener(v -> openDepartmentUrl(3));
-        cardBioTechnology.setOnClickListener(v -> openDepartmentUrl(4));
-        cardChemical.setOnClickListener(v -> openDepartmentUrl(5));
-        cardCivil.setOnClickListener(v -> openDepartmentUrl(6));
-        cardElectrical.setOnClickListener(v -> openDepartmentUrl(7));
-        cardElectronics.setOnClickListener(v -> openDepartmentUrl(8));
-        cardFoodTech.setOnClickListener(v -> openDepartmentUrl(9));
-        cardIT.setOnClickListener(v -> openDepartmentUrl(10));
-        cardMechanical.setOnClickListener(v -> openDepartmentUrl(11));
-        cardPetroleum.setOnClickListener(v -> openDepartmentUrl(12));
-        cardRobotics.setOnClickListener(v -> openDepartmentUrl(13));
-        cardTextile.setOnClickListener(v -> openDepartmentUrl(14));
-        cardCSE.setOnClickListener(v -> openDepartmentUrl(15));
-        cardCSEDataScience.setOnClickListener(v -> openDepartmentUrl(16));
-        cardCSEAIML.setOnClickListener(v -> openDepartmentUrl(17));
-        cardCSECS.setOnClickListener(v -> openDepartmentUrl(18));
-        cardCSECSBS.setOnClickListener(v -> openDepartmentUrl(19));
-        cardBCA.setOnClickListener(v -> openDepartmentUrl(20));
-        cardMCA.setOnClickListener(v -> openDepartmentUrl(21));
-        cardBBA.setOnClickListener(v -> openDepartmentUrl(22));
-        cardMBA.setOnClickListener(v -> openDepartmentUrl(23));
-        cardBALLB.setOnClickListener(v -> openDepartmentUrl(24));
-        cardBBALLB.setOnClickListener(v -> openDepartmentUrl(25));
-        cardBSC.setOnClickListener(v -> openDepartmentUrl(26));
-        cardAgricultureBSC.setOnClickListener(v -> openDepartmentUrl(27));
-        cardMSCChemistry.setOnClickListener(v -> openDepartmentUrl(28));
-        cardBPharmacy.setOnClickListener(v -> openDepartmentUrl(29));
+        // Loop through departments and find card by ID safely
+        for (int i = 0; i < departments.length; i++) {
+            Department dept = departments[i];
+            int cardId = getResources().getIdentifier("card" + dept.name.replaceAll("[^A-Za-z0-9]", ""), "id", requireContext().getPackageName());
+            if (cardId != 0) {
+                CardView card = view.findViewById(cardId);
+                if (card != null) {
+                    allCards.add(card);
+                    int finalI = i;
+                    card.setOnClickListener(v -> openDepartmentUrl(finalI));
+                }
+            }
+        }
     }
 
     private void setupSearch() {
+        if (searchEditText == null) return;
+
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterDepartments(s.toString());
             }
-
             @Override
             public void afterTextChanged(Editable s) {}
         });
@@ -247,135 +143,70 @@ public class PYQPFragment extends Fragment {
     private void filterDepartments(String query) {
         String searchQuery = query.toLowerCase().trim();
 
-        if (searchQuery.isEmpty()) {
-            // Show all cards and headers when search is empty
-            for (CardView card : allCards) {
-                card.setVisibility(View.VISIBLE);
-            }
-            showAllHeaders();
-            return;
-        }
-
         // Hide all cards first
         for (CardView card : allCards) {
-            card.setVisibility(View.GONE);
+            if (card != null) card.setVisibility(View.GONE);
         }
 
-        // Track which sections have visible cards
-        boolean hasEngineeringResults = false;
-        boolean hasComputerScienceResults = false;
-        boolean hasBusinessResults = false;
-        boolean hasLawResults = false;
-        boolean hasScienceResults = false;
-        boolean hasPharmacyResults = false;
+        boolean hasEngineering = false, hasCS = false, hasBusiness = false, hasLaw = false, hasScience = false, hasPharmacy = false;
 
-        // Show matching cards and track sections
-        for (int i = 0; i < allDepartments.size(); i++) {
-            Department dept = allDepartments.get(i);
-            if (dept.searchKeywords.contains(searchQuery) ||
-                    dept.name.toLowerCase().contains(searchQuery)) {
-                if (i < allCards.size()) {
-                    allCards.get(i).setVisibility(View.VISIBLE);
-
-                    // Track which section has results
+        if (!searchQuery.isEmpty()) {
+            for (int i = 0; i < allDepartments.size() && i < allCards.size(); i++) {
+                Department dept = allDepartments.get(i);
+                CardView card = allCards.get(i);
+                if (dept != null && card != null &&
+                        (dept.searchKeywords.contains(searchQuery) || dept.name.toLowerCase().contains(searchQuery))) {
+                    card.setVisibility(View.VISIBLE);
                     switch (dept.section) {
-                        case "engineering":
-                            hasEngineeringResults = true;
-                            break;
-                        case "computer_science":
-                            hasComputerScienceResults = true;
-                            break;
-                        case "business":
-                            hasBusinessResults = true;
-                            break;
-                        case "law":
-                            hasLawResults = true;
-                            break;
-                        case "science":
-                            hasScienceResults = true;
-                            break;
-                        case "pharmacy":
-                            hasPharmacyResults = true;
-                            break;
+                        case "engineering": hasEngineering = true; break;
+                        case "computer_science": hasCS = true; break;
+                        case "business": hasBusiness = true; break;
+                        case "law": hasLaw = true; break;
+                        case "science": hasScience = true; break;
+                        case "pharmacy": hasPharmacy = true; break;
                     }
                 }
             }
+        } else {
+            for (CardView card : allCards) {
+                if (card != null) card.setVisibility(View.VISIBLE);
+            }
+            hasEngineering = hasCS = hasBusiness = hasLaw = hasScience = hasPharmacy = true;
         }
 
-        // Show/hide section headers based on results
-        updateHeaderVisibility(hasEngineeringResults, hasComputerScienceResults,
-                hasBusinessResults, hasLawResults, hasScienceResults, hasPharmacyResults);
-    }
-
-    private void showAllHeaders() {
-        if (engineeringHeader != null) engineeringHeader.setVisibility(View.VISIBLE);
-        if (computerScienceHeader != null) computerScienceHeader.setVisibility(View.VISIBLE);
-        if (businessHeader != null) businessHeader.setVisibility(View.VISIBLE);
-        if (lawHeader != null) lawHeader.setVisibility(View.VISIBLE);
-        if (scienceHeader != null) scienceHeader.setVisibility(View.VISIBLE);
-        if (pharmacyHeader != null) pharmacyHeader.setVisibility(View.VISIBLE);
-    }
-
-    private void updateHeaderVisibility(boolean hasEngineering, boolean hasComputerScience,
-                                        boolean hasBusiness, boolean hasLaw,
-                                        boolean hasScience, boolean hasPharmacy) {
-        if (engineeringHeader != null) {
-            engineeringHeader.setVisibility(hasEngineering ? View.VISIBLE : View.GONE);
-        }
-        if (computerScienceHeader != null) {
-            computerScienceHeader.setVisibility(hasComputerScience ? View.VISIBLE : View.GONE);
-        }
-        if (businessHeader != null) {
-            businessHeader.setVisibility(hasBusiness ? View.VISIBLE : View.GONE);
-        }
-        if (lawHeader != null) {
-            lawHeader.setVisibility(hasLaw ? View.VISIBLE : View.GONE);
-        }
-        if (scienceHeader != null) {
-            scienceHeader.setVisibility(hasScience ? View.VISIBLE : View.GONE);
-        }
-        if (pharmacyHeader != null) {
-            pharmacyHeader.setVisibility(hasPharmacy ? View.VISIBLE : View.GONE);
-        }
+        // Update header visibility safely
+        if (engineeringHeader != null) engineeringHeader.setVisibility(hasEngineering ? View.VISIBLE : View.GONE);
+        if (computerScienceHeader != null) computerScienceHeader.setVisibility(hasCS ? View.VISIBLE : View.GONE);
+        if (businessHeader != null) businessHeader.setVisibility(hasBusiness ? View.VISIBLE : View.GONE);
+        if (lawHeader != null) lawHeader.setVisibility(hasLaw ? View.VISIBLE : View.GONE);
+        if (scienceHeader != null) scienceHeader.setVisibility(hasScience ? View.VISIBLE : View.GONE);
+        if (pharmacyHeader != null) pharmacyHeader.setVisibility(hasPharmacy ? View.VISIBLE : View.GONE);
     }
 
     private void openDepartmentUrl(int departmentIndex) {
+        if (departmentIndex < 0 || departmentIndex >= departments.length) return;
+
         try {
-            if (departmentIndex >= 0 && departmentIndex < departments.length) {
-                Department department = departments[departmentIndex];
-                String url = BASE_URL + department.urlId;
+            Department department = departments[departmentIndex];
+            if (department == null) return;
 
-                // Always parse as Uri first
-                Uri uri = Uri.parse(url);
+            String url = BASE_URL + department.urlId;
+            Uri uri = Uri.parse(url);
+            if (uri.getScheme() == null) uri = Uri.parse("http://" + url);
 
-                // If Uri has no scheme, add http:// by default
-                if (uri.getScheme() == null) {
-                    uri = Uri.parse("http://" + url);
-                }
-
+            if (isAdded()) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-
-                if (isAdded()) {
-                    try {
-                        startActivity(Intent.createChooser(intent, "Open with"));
-                    } catch (Exception e) {
-                        Toast.makeText(requireContext(),
-                                "No browser found to open the link",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                try {
+                    startActivity(Intent.createChooser(intent, "Open with"));
+                } catch (Exception e) {
+                    Toast.makeText(requireContext(), "No browser found to open the link", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception e) {
-            String deptName = (departmentIndex >= 0 && departmentIndex < departments.length)
-                    ? departments[departmentIndex].name
-                    : "Department";
             if (isAdded()) {
                 Toast.makeText(requireContext(),
-                        "Error opening " + deptName + " question papers",
-                        Toast.LENGTH_SHORT).show();
+                        "Error opening question papers", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-
 }

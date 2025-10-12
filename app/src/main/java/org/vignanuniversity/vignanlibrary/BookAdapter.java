@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
-    private List<Book> bookList;
+    private final List<Book> bookList;
 
     public BookAdapter(List<Book> bookList) {
         this.bookList = bookList;
@@ -27,20 +27,19 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Book book = bookList.get(position);
-        holder.title.setText(book.getTitle());
-        holder.publisher.setText(book.getPublisher());
-        holder.edition.setText(book.getEdition());
-        holder.department.setText(book.getDepartment());
+        holder.title.setText(book.getTitle() == null ? "N/A" : book.getTitle());
+        holder.publisher.setText("Publisher: " + (book.getPublisher() == null ? "N/A" : book.getPublisher()));
+        holder.edition.setText("Edition: " + (book.getEdition() == null ? "N/A" : book.getEdition()));
+        holder.department.setText("Department: " + (book.getDepartment() == null ? "N/A" : book.getDepartment()));
     }
 
     @Override
     public int getItemCount() {
-        return bookList.size();
+        return bookList != null ? bookList.size() : 0;
     }
 
     static class BookViewHolder extends RecyclerView.ViewHolder {
-        TextView title, publisher, edition, department;
-
+        final TextView title, publisher, edition, department;
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tvTitle);
