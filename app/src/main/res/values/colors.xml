@@ -1,85 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#F8F8F8</color>
-    <color name="purple_500">#F195A7</color>
-    <color name="purple_700">#917EBC</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FA018786</color>
-    <color name="black">#FF000000</color>
-    <color name="light_white">#D2D2D2</color>
-    <color name="b1">#DADBBD</color>
-    <color name="b2">#D82148</color>
-    <color name="b3">#151D3B</color>
-    <color name="b4">#D2C3D8</color>
+    <!-- Primary Theme Colors -->
+    <color name="primary_golden">#c5c035</color>
+    <color name="primary_teal">#24756c</color>
+    
+    <!-- Primary Color Variations -->
+    <color name="primary_golden_light">#d4d15a</color>
+    <color name="primary_golden_dark">#a6a32b</color>
+    <color name="primary_teal_light">#4a9d93</color>
+    <color name="primary_teal_dark">#1a544a</color>
+    
+    <!-- Basic Colors -->
     <color name="white">#FFFFFF</color>
-    <color name="orange_toolbar">#CC6442</color>
-
-
-    <color name="sri">#8692f7</color>
-    <color name="sri1">#EEDBFF</color>
-    <color name="sri_1">#CDD2F8</color>
-    <color name="sri_3">#F6D5F7</color>
-    <color name="sri_2">#98A1EA</color>
-    <color name="sri_4">#FBE9D7</color>
-    <!--    FBE9D7-->
-
-
-
-    <color name="purple_lite">#DACBFA</color>
-    <color name="purple">#ba53de</color>
-    <color name="pink">#f469a9</color>
-    <color name="blue">#88bef5</color>
-    <color name="peach">#f2a580</color>
-    <color name="peach2">#ed8756</color>
-    <color name="peach0">#F1B79C</color>
-
-    <color name="Red">#CF4444</color>
-    <color name="teal">#60EFFF</color>
-    <color name="green">#29F897</color>
-    <color name="light_green">#90EE90</color>
-    <color name="baby_pink">#FCF2FA</color>
-    <color name="Dark_blue">#3949AB</color>
-    <color name="lt_green">#daeef3</color>
-    <color name="Dk_green">#92cddc</color>
-
-
-    <color name="gray">#888</color>
-
-
-
-
-
-
-
-        <color name="primary">#1976D2</color>
-        <color name="primary_variant">#0D47A1</color>
-        <color name="primary_container">#E3F2FD</color>
-        <color name="on_primary">#FFFFFF</color>
-        <color name="on_primary_container">#0D47A1</color>
-
-        <!-- Secondary Colors -->
-        <color name="secondary">#FF6B35</color>
-        <color name="secondary_variant">#E65100</color>
-        <color name="secondary_container">#FFE0B2</color>
-        <color name="on_secondary">#FFFFFF</color>
-        <color name="on_secondary_container">#BF360C</color>
-
-        <!-- Surface Colors -->
-        <color name="surface_color">#FFFFFF</color>
-        <color name="on_surface_emphasis">#1A1A1A</color>
-        <color name="on_surface_medium">#757575</color>
-        <color name="on_surface_disabled">#BDBDBD</color>
-
-        <!-- Status Colors -->
-        <color name="success">#4CAF50</color>
-        <color name="warning">#FF9800</color>
-        <color name="error">#F44336</color>
-
-        <!-- Background Colors -->
-        <color name="background_primary">#FAFAFA</color>
-        <color name="background_secondary">#F5F5F5</color>
-
-        <!-- Border Colors -->
-        <color name="border_light">#E0E0E0</color>
-        <color name="border_medium">#BDBDBD</color>
- </resources>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- Background Colors -->
+    <color name="background_primary">#FFFFFF</color>
+    <color name="background_secondary">#F8F9FA</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="background_overlay">#80000000</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#2C3E50</color>
+    <color name="text_secondary">#6C757D</color>
+    <color name="text_hint">#ADB5BD</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_golden">#c5c035</color>
+    <color name="text_teal">#24756c</color>
+    
+    <!-- Surface Colors -->
+    <color name="surface_light">#FFFFFF</color>
+    <color name="surface_dark">#F8F9FA</color>
+    <color name="surface_golden">#FDFCF0</color>
+    <color name="surface_teal">#F0F8F7</color>
+    
+    <!-- Border Colors -->
+    <color name="border_light">#E9ECEF</color>
+    <color name="border_medium">#DEE2E6</color>
+    <color name="border_golden">#c5c035</color>
+    <color name="border_teal">#24756c</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#28A745</color>
+    <color name="warning">#FFC107</color>
+    <color name="error">#DC3545</color>
+    <color name="info">#17A2B8</color>
+    
+    <!-- Button Colors -->
+    <color name="button_primary">#c5c035</color>
+    <color name="button_secondary">#24756c</color>
+    <color name="button_disabled">#E9ECEF</color>
+    <color name="button_text_primary">#FFFFFF</color>
+    <color name="button_text_secondary">#FFFFFF</color>
+    <color name="button_text_disabled">#6C757D</color>
+    
+    <!-- Card Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_shadow">#1A000000</color>
+    
+    <!-- Divider Colors -->
+    <color name="divider">#E9ECEF</color>
+    <color name="divider_golden">#c5c035</color>
+    <color name="divider_teal">#24756c</color>
+    
+    <!-- Legacy colors for compatibility -->
+    <color name="purple_200">#F8F8F8</color>
+    <color name="purple_500">#c5c035</color>
+    <color name="purple_700">#24756c</color>
+    <color name="teal_200">#d4d15a</color>
+    <color name="teal_700">#24756c</color>
+    <color name="orange_toolbar">#24756c</color>
+</resources>

@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#CC6442"
+        android:background="@color/primary_teal"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleTextColor="#FFFFFF"
         app:navigationIcon="?attr/homeAsUpIndicator" />
@@ -46,7 +46,7 @@
                 <View
                     android:layout_width="60dp"
                     android:layout_height="4dp"
-                    android:background="#FF9800"
+                    android:background="@color/primary_golden"
                     android:layout_marginBottom="12dp" />
 
                 <TextView
@@ -508,7 +508,7 @@
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:gravity="center"
-                    android:background="#FFFFFF">
+                    android:background="@color/card_background">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -516,7 +516,7 @@
                         android:text="Vignan Library App"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#CC6442"
+                        android:textColor="@color/text_teal"
                         android:layout_marginBottom="6dp" />
 
                     <TextView
@@ -524,7 +524,7 @@
                         android:layout_height="wrap_content"
                         android:text="© 2022-2026 Vignan University"
                         android:textSize="12sp"
-                        android:textColor="#999" />
+                        android:textColor="@color/text_hint" />
 
                 </LinearLayout>
 

@@ -62,9 +62,9 @@ public class AboutUsActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        // Set status bar color
+        // Set status bar color with theme color
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#CC6442"));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_teal));
         }
 
         // Setup toolbar if you have one in your layout

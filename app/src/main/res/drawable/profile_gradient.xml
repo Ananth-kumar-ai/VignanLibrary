@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape  xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--    <gradient android:type="linear"-->
-    <!--        android:startColor="#EEDBFF"-->
-    <!--        android:centerColor="@color/white"-->
-    <!--        android:endColor="#EEDBFF"-->
-    <!--         />-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
         android:type="linear"
-        android:startColor="@color/sri"
+        android:startColor="@color/surface_golden"
         android:centerColor="@color/white"
-        android:endColor="@color/sri"
-        />
-    <gradient
-        android:startColor="@color/baby_pink"
-        android:centerColor="@color/white"
-        android:endColor="@color/baby_pink"
-        android:angle="270" />
+        android:endColor="@color/surface_teal"
+        android:angle="135" />
 </shape>

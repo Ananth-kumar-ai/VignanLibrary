@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/background_secondary"
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_width="match_parent"
@@ -35,19 +35,19 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/filledTextField1"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.VignanLibrary.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Old Password"
-                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeColor="@color/border_golden"
                     app:boxStrokeWidth="1.5dp"
-                    app:hintTextColor="#CC6442">
+                    app:hintTextColor="@color/text_golden">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/oldpass_validation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:inputType="textPassword"
                         android:nextFocusForward="@+id/new_pass"/>
 
@@ -55,19 +55,19 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/filledTextField2"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.VignanLibrary.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter New Password"
-                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeColor="@color/border_golden"
                     app:boxStrokeWidth="1.5dp"
-                    app:hintTextColor="#CC6442">
+                    app:hintTextColor="@color/text_golden">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/new_pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:inputType="textPassword"
                         android:nextFocusForward="@+id/new_pass_con"/>
 
@@ -75,19 +75,19 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/filledTextField3"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.VignanLibrary.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Re-Enter New Password"
-                    app:boxStrokeColor="#CC6442"
+                    app:boxStrokeColor="@color/border_golden"
                     app:boxStrokeWidth="1.5dp"
-                    app:hintTextColor="#CC6442">
+                    app:hintTextColor="@color/text_golden">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/new_pass_con"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:inputType="textPassword"
                         android:nextFocusForward="@+id/submit"/>
 
@@ -101,8 +101,8 @@
                     android:layout_marginTop="20dp"
                     android:text="Update Password"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="#CC6442"
-                    app:cornerRadius="0dp" />
+                    android:backgroundTint="@color/button_primary"
+                    app:cornerRadius="12dp" />
 
             </LinearLayout>
         </LinearLayout>

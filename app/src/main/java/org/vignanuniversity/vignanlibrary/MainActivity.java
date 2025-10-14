@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ✅ Safe status bar color (works across Android versions)
+        // ✅ Safe status bar color (works across Android versions) - use theme color
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(Color.parseColor("#CC6442"));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_teal));
         }
 
         // ✅ Setup Toolbar
