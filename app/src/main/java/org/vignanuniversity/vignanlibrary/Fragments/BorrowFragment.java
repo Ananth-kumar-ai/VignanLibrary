@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,13 +29,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class BorrowFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private BorrowedBookAdapter adapter;
-    private final List<BorrowedBook> bookList = new ArrayList<>();
+    private final List<BorrowedBook> allBooks = new ArrayList<>();
+    private final List<BorrowedBook> displayedBooks = new ArrayList<>();
     private RequestQueue queue;
     private static final String TAG = "BorrowFragment";
+
+    private Button btnCurrentlyBorrowed, btnTransactionHistory;
+    private boolean showingCurrentlyBorrowed = true;
 
     @Nullable
     @Override
@@ -43,16 +51,93 @@ public class BorrowFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_borrow, container, false);
+
+        // Initialize views
         recyclerView = root.findViewById(R.id.recyclerBorrowedBooks);
+        btnCurrentlyBorrowed = root.findViewById(R.id.btnCurrentlyBorrowed);
+        btnTransactionHistory = root.findViewById(R.id.btnTransactionHistory);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new BorrowedBookAdapter(getContext(), bookList, this::showPopup);
+        adapter = new BorrowedBookAdapter(getContext(), displayedBooks, this::showPopup);
         recyclerView.setAdapter(adapter);
+
+        // Set up button click listeners
+        btnCurrentlyBorrowed.setOnClickListener(v -> showCurrentlyBorrowed());
+        btnTransactionHistory.setOnClickListener(v -> showTransactionHistory());
 
         queue = Volley.newRequestQueue(requireContext());
         loadBorrowedBooks();
 
         return root;
+    }
+
+    private void showCurrentlyBorrowed() {
+        showingCurrentlyBorrowed = true;
+        updateButtonStyles();
+        filterBooks();
+    }
+
+    private void showTransactionHistory() {
+        showingCurrentlyBorrowed = false;
+        updateButtonStyles();
+        filterBooks();
+    }
+
+    private void updateButtonStyles() {
+        if (showingCurrentlyBorrowed) {
+            // Currently Borrowed - Active style
+            btnCurrentlyBorrowed.setBackgroundTintList(
+                    android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#c5c035")));
+            btnCurrentlyBorrowed.setTextColor(getResources().getColor(android.R.color.white, null));
+
+            // Transaction History - Inactive style
+            btnTransactionHistory.setBackgroundTintList(
+                    getResources().getColorStateList(android.R.color.darker_gray, null));
+            btnTransactionHistory.setTextColor(getResources().getColor(android.R.color.black, null));
+        } else {
+            // Transaction History - Active style
+            btnTransactionHistory.setBackgroundTintList(
+                    android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#c5c035")));
+            btnTransactionHistory.setTextColor(getResources().getColor(android.R.color.white, null));
+
+            // Currently Borrowed - Inactive style
+            btnCurrentlyBorrowed.setBackgroundTintList(
+                    getResources().getColorStateList(android.R.color.darker_gray, null));
+            btnCurrentlyBorrowed.setTextColor(getResources().getColor(android.R.color.black, null));
+        }
+    }
+
+    private void filterBooks() {
+        displayedBooks.clear();
+
+        for (BorrowedBook book : allBooks) {
+            boolean isReturned = isBookReturned(book);
+
+            if (showingCurrentlyBorrowed) {
+                // Show books that are NOT returned (dateOfReturn is 00/00/0000 or --)
+                if (!isReturned) {
+                    displayedBooks.add(book);
+                }
+            } else {
+                // Show books that ARE returned
+                if (isReturned) {
+                    displayedBooks.add(book);
+                }
+            }
+        }
+
+        safeUi(() -> adapter.notifyDataSetChanged());
+    }
+
+    private boolean isBookReturned(BorrowedBook book) {
+        if (book.dateOfReturn == null ||
+                book.dateOfReturn.equals("00/00/0000") ||
+                book.dateOfReturn.equals("--") ||
+                book.dateOfReturn.trim().isEmpty()) {
+            return false; // Not returned
+        }
+        return true; // Returned
     }
 
     private void loadBorrowedBooks() {
@@ -72,7 +157,7 @@ public class BorrowFragment extends Fragment {
                         JSONObject responseObj = new JSONObject(response);
                         JSONArray data = responseObj.optJSONArray("data");
 
-                        bookList.clear();
+                        allBooks.clear();
                         if (data != null) {
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject item = data.optJSONObject(i);
@@ -88,7 +173,9 @@ public class BorrowFragment extends Fragment {
                             }
                         } else {
                             Log.w(TAG, "No data found in student details.");
-                            safeUi(() -> adapter.notifyDataSetChanged());
+                            safeUi(() -> {
+                                filterBooks();
+                            });
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error parsing student details JSON", e);
@@ -122,13 +209,20 @@ public class BorrowFragment extends Fragment {
                             book.dateOfIssue = dateOfIssue;
                             book.dateOfReturn = dateOfReturn;
 
+                            // Debug logging
+                            Log.d(TAG, "========================================");
+                            Log.d(TAG, "Book Title: " + title);
+                            Log.d(TAG, "Date of Issue: [" + dateOfIssue + "]");
+                            Log.d(TAG, "Date of Return: [" + dateOfReturn + "]");
+                            Log.d(TAG, "========================================");
+
                             safeUi(() -> {
                                 // Prevent duplicates
-                                for (BorrowedBook existing : bookList) {
+                                for (BorrowedBook existing : allBooks) {
                                     if (existing.accno.equals(book.accno)) return;
                                 }
-                                bookList.add(book);
-                                adapter.notifyItemInserted(bookList.size() - 1);
+                                allBooks.add(book);
+                                filterBooks(); // Re-filter to show in correct tab
                             });
                         } else {
                             Log.w(TAG, "No data for accno: " + accno);
@@ -160,8 +254,21 @@ public class BorrowFragment extends Fragment {
     private void showPopup(BorrowedBook book) {
         if (!isAdded() || getContext() == null) return;
 
+        String dueDate = "--";
+        try {
+            if (book.dateOfIssue != null && !book.dateOfIssue.equals("--") && !book.dateOfIssue.isEmpty()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate issueDate = LocalDate.parse(book.dateOfIssue.trim(), formatter);
+                LocalDate due = issueDate.plusDays(14);
+                dueDate = due.format(formatter);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error calculating due date", e);
+        }
+
         String msg = "\nDate of Issue: " + (book.dateOfIssue == null ? "--" : book.dateOfIssue) +
-                "\nDate of Return: " + (book.dateOfReturn == null ? "--" : book.dateOfReturn);
+                "\nDate of Return: " + (book.dateOfReturn == null ? "--" : book.dateOfReturn) +
+                "\nDue Date: " + dueDate;
 
         try {
             new AlertDialog.Builder(requireContext())
