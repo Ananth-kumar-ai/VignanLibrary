@@ -43,9 +43,9 @@ public class ProfileFragment extends Fragment {
 
     // Library APIs
     private static final String LIBRARY_STUDENT_DETAILS_URL =
-            "http://192.168.10.25/jspapi/library/student_details.jsp?regno=%s";
+            "http://192.168.10.25/jspapi/Vignan_Library_app/student_info.jsp?regno=%s";
     private static final String LIBRARY_BOOK_COUNT_URL =
-            "http://192.168.10.25/jspapi/library/bcount.jsp?regno=%s";
+            "http://192.168.10.25/jspapi/Vignan_Library_app/bcount.jsp?regno=%s";
 
     private FragmentProfileBinding binding;
     private RequestQueue requestQueue;

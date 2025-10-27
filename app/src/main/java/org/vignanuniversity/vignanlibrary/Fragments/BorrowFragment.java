@@ -148,7 +148,7 @@ public class BorrowFragment extends Fragment {
             return;
         }
 
-        String url = "http://192.168.10.25/jspapi/library/student_details.jsp?regno=" + regno;
+        String url = "http://192.168.10.25/jspapi/Vignan_Library_app/student_info.jsp?regno=" + regno;
         Log.d(TAG, "Fetching borrowed books from: " + url);
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -187,7 +187,7 @@ public class BorrowFragment extends Fragment {
     }
 
     private void fetchBookMeta(String accno, String dateOfIssue, String dateOfReturn) {
-        String url = "http://192.168.10.25/jspapi/library/basedOnaccno.jsp?accno=" + accno;
+        String url = "http://192.168.10.25/jspapi/Vignan_Library_app/book_details.jsp?accno=" + accno;
         Log.d(TAG, "Fetching meta for accno: " + accno);
 
         StringRequest req = new StringRequest(Request.Method.GET, url,

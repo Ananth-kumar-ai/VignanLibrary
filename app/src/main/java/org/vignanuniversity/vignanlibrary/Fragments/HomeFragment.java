@@ -35,8 +35,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private static final String COUNT_API_URL = "http://160.187.169.14/jspapi/library/count.jsp";
-    private static final String UCOUNT_API_URL = "http://160.187.169.14/jspapi/library/ucount.jsp";
+    private static final String COUNT_API_URL = "http://192.168.10.25/jspapi/Vignan_Library_app/count.jsp";
+    private static final String UCOUNT_API_URL = "http://192.168.10.25/jspapi/Vignan_Library_app/ucount.jsp";
     private static final String LIBRARY_INFO_URL = "https://vignan.ac.in/newvignan/";
 
     private TextView totalBooksCount, notIssuedBooksCount, issuedBooksCount;
@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
         String regno = prefs.getString("regno", "");
         if (regno.isEmpty()) return;
 
-        String url = "http://192.168.10.25/jspapi/library/student_details.jsp?regno=" + regno;
+        String url = "http://192.168.10.25/jspapi/Vignan_Library_app/student_info.jsp?regno=" + regno;
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 response -> Executors.newSingleThreadExecutor().execute(() -> {
                     try {

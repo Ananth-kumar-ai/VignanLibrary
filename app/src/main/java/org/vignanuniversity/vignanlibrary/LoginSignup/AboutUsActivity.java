@@ -36,13 +36,13 @@ public class AboutUsActivity extends AppCompatActivity {
                     "https://github.com/omkarpavan", "https://linkedin.com/in/omkar-darisi-713533343"),
             new TeamMember("N.ANANTH", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18036.JPG",
-                    "https://github.com/priyasharma", "https://linkedin.com/in/priyasharma"),
+                    "https://github.com/Ananth-kumar-ai", "https://www.linkedin.com/in/ananth-kumar-nalluri/"),
             new TeamMember("N.B.L.GANESH", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18060.JPG",
-                    "https://github.com/rahulverma", "https://linkedin.com/in/rahulverma"),
+                    "https://github.com/ganeshnelavalli", "https://www.linkedin.com/in/nelavalli-ganesh-a1806a290/"),
             new TeamMember("M.JEEVAN", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18028.JPG",
-                    "https://github.com/anitareddy", "https://linkedin.com/in/anitareddy")
+                    "https://github.com/7337298347", "https://www.linkedin.com/in/jeevan-mogalipuvvu-a9093a278/")
     };
 
     @Override
