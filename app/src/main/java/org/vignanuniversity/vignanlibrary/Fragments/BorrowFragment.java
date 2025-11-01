@@ -149,6 +149,7 @@ public class BorrowFragment extends Fragment {
         }
 
         String url = "http://192.168.10.25/jspapi/Vignan_Library_app/student_info.jsp?regno=" + regno;
+        String url = "http://160.187.169.14/jspapi/Vignan_Library_app/student_info.jsp?regno=" + regno;
         Log.d(TAG, "Fetching borrowed books from: " + url);
 
         StringRequest request = new StringRequest(Request.Method.GET, url,

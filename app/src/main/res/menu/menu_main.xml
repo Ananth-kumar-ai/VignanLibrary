@@ -13,9 +13,6 @@
                 android:id="@+id/menu_change_password"
                 android:title="Change Password" />
 
-            <item
-                android:id="@+id/menu_privacy_policy"
-                android:title="Privacy &amp; Policy" />
 
             <item
                 android:id="@+id/menu_about_us"

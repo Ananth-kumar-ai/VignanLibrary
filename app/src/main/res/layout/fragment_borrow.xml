@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:padding="12dp"
+    android:background="#FAFAFA">
 
     <!-- Tab Layout -->
     <LinearLayout
@@ -13,18 +14,32 @@
         android:orientation="horizontal"
         android:padding="8dp"
         android:background="@android:color/white"
-        android:elevation="4dp">
+        android:elevation="6dp"
+        android:layout_marginBottom="8dp"
+        android:clipToOutline="true"
+        android:layout_marginTop="4dp"
+        android:backgroundTintMode="add"
+        android:backgroundTint="#FFFFFFFF"
+        android:translationZ="4dp"
+        android:gravity="center"
+        android:dividerPadding="4dp">
 
         <Button
             android:id="@+id/btnCurrentlyBorrowed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="6dp"
             android:text="Currently Borrowed"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#c5c035"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingVertical="10dp"
+            android:backgroundTint="#FFD700"
+            android:elevation="4dp"
+            android:stateListAnimator="@null"
+            android:fontFamily="sans-serif-medium"
+            android:translationZ="2dp"
             style="@style/Widget.MaterialComponents.Button" />
 
         <Button
@@ -32,12 +47,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="6dp"
             android:text="Transaction History"
-            android:textColor="#555555"
-            android:backgroundTint="#E0E0E0"
+            android:textColor="#444444"
+            android:textSize="16sp"
+            android:paddingVertical="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:backgroundTint="#EEEEEE"
+            android:elevation="2dp"
+            android:stateListAnimator="@null"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
     </LinearLayout>
 
     <!-- RecyclerView for books -->
@@ -46,6 +65,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        android:layout_marginTop="4dp"
+        android:scrollbars="vertical"
+        android:overScrollMode="always"
+        android:fadeScrollbars="false"
+        android:background="#FAFAFA" />
 
 </LinearLayout>
