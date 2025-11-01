@@ -37,8 +37,6 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     private static final String COUNT_API_URL = "http://192.168.10.25/jspapi/Vignan_Library_app/count.jsp";
     private static final String UCOUNT_API_URL = "http://192.168.10.25/jspapi/Vignan_Library_app/ucount.jsp";
-    private static final String COUNT_API_URL = "http://160.187.169.14/jspapi/Vignan_Library_app/count.jsp";
-    private static final String UCOUNT_API_URL = "http://160.187.169.14/jspapi/Vignan_Library_app/ucount.jsp";
     private static final String LIBRARY_INFO_URL = "https://vignan.ac.in/newvignan/";
 
     private TextView totalBooksCount, notIssuedBooksCount, issuedBooksCount;

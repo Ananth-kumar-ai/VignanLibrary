@@ -82,7 +82,6 @@ public class CatalogFragment extends Fragment {
         // Pass API URL to BooksFragment
         Bundle args = new Bundle();
         args.putString("api_url", "http://192.168.10.25/jspapi/Vignan_Library_app/book_details.jsp");
-        args.putString("api_url", "http://160.187.169.14/jspapi/Vignan_Library_app/book_details.jsp");
         booksFragment.setArguments(args);
 
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
