@@ -30,20 +30,25 @@ public class AboutUsActivity extends AppCompatActivity {
     private ImageView ivMember4Profile, ivMember4Github, ivMember4Linkedin;
 
     // Team member data with API image URLs
+    // Team member data with API image URLs
     private TeamMember[] teamMembers = {
             new TeamMember("D.OMKAR", "Information Technology",
                     "http://160.187.169.14/jspapi/photos/221FA07124.JPG",
                     "https://github.com/omkarpavan", "https://linkedin.com/in/omkar-darisi-713533343"),
+
             new TeamMember("N.ANANTH", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18036.JPG",
                     "https://github.com/Ananth-kumar-ai", "https://www.linkedin.com/in/ananth-kumar-nalluri/"),
+
             new TeamMember("N.B.L.GANESH", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18060.JPG",
                     "https://github.com/ganeshnelavalli", "https://www.linkedin.com/in/nelavalli-ganesh-a1806a290/"),
+
             new TeamMember("M.JEEVAN", "AI&ML",
                     "http://160.187.169.14/jspapi/photos/221FA18028.JPG",
                     "https://github.com/7337298347", "https://www.linkedin.com/in/jeevan-mogalipuvvu-a9093a278/")
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

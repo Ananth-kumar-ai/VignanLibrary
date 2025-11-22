@@ -99,7 +99,6 @@ public class ProfileFragment extends Fragment {
         binding.tvBranch.setText("Loading...");
         binding.tvDepartment.setText("Loading...");
         binding.tvEmail.setText("Loading...");
-        binding.tvPhone.setText("Loading...");
 
         // Library Status Loading States
         binding.tvAccid.setText("Loading...");
@@ -263,8 +262,6 @@ public class ProfileFragment extends Fragment {
         binding.tvBranch.setText(branch);
         binding.tvDepartment.setText(department);
         binding.tvEmail.setText(email);
-        binding.tvPhone.setText(phone);
-
         Log.d(TAG, "UI updated with student data for: " + name);
     }
 
@@ -279,7 +276,6 @@ public class ProfileFragment extends Fragment {
         binding.tvBranch.setText("Branch Not Available");
         binding.tvDepartment.setText("Department Not Available");
         binding.tvEmail.setText("Email Not Available");
-        binding.tvPhone.setText("Phone Not Available");
         binding.tvYear.setText("Year");
     }
 

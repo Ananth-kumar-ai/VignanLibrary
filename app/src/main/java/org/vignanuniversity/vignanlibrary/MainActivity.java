@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +17,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.vignanuniversity.vignanlibrary.Fragments.BorrowFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.CatalogFragment;
 import org.vignanuniversity.vignanlibrary.Fragments.HomeFragment;
-import org.vignanuniversity.vignanlibrary.ProfileFragment;
 import org.vignanuniversity.vignanlibrary.LoginSignup.AboutUsActivity;
 import org.vignanuniversity.vignanlibrary.LoginSignup.Change_pasword;
+import org.vignanuniversity.vignanlibrary.LoginSignup.Feedback;
 import org.vignanuniversity.vignanlibrary.LoginSignup.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -111,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.menu_about_us) {
             startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
+            return true;
+        }
+        else if (id == R.id.menu_feedback) {  // 👈 add this block
+            startActivity(new Intent(getApplicationContext(), Feedback.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
