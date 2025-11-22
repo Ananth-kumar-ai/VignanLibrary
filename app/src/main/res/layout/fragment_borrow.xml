@@ -7,7 +7,7 @@
     android:padding="12dp"
     android:background="#FAFAFA">
 
-    <!-- Tab Layout -->
+    <!-- Filter Tabs -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,13 +16,8 @@
         android:background="@android:color/white"
         android:elevation="6dp"
         android:layout_marginBottom="8dp"
-        android:clipToOutline="true"
         android:layout_marginTop="4dp"
-        android:backgroundTintMode="add"
-        android:backgroundTint="#FFFFFFFF"
-        android:translationZ="4dp"
-        android:gravity="center"
-        android:dividerPadding="4dp">
+        android:gravity="center">
 
         <Button
             android:id="@+id/btnCurrentlyBorrowed"
@@ -57,19 +52,59 @@
             android:elevation="2dp"
             android:stateListAnimator="@null"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
     </LinearLayout>
 
-    <!-- RecyclerView for books -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerBorrowedBooks"
+    <!-- CONTENT AREA -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:layout_marginTop="4dp"
-        android:scrollbars="vertical"
-        android:overScrollMode="always"
-        android:fadeScrollbars="false"
-        android:background="#FAFAFA" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerBorrowedBooks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:background="#FAFAFA" />
+
+        <!-- BEAUTIFUL EMPTY STATE (NO CARDVIEW) -->
+        <LinearLayout
+            android:id="@+id/emptyStateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/emptyStateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No books here"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#2C3E50"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/emptyStateMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You don’t have any books currently."
+                android:textSize="15sp"
+                android:textColor="#7F8C8D"
+                android:gravity="center"
+                android:maxWidth="300dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +46,9 @@ public class BorrowFragment extends Fragment {
     private Button btnCurrentlyBorrowed, btnTransactionHistory;
     private boolean showingCurrentlyBorrowed = true;
 
+    private LinearLayout emptyStateContainer;
+    private TextView emptyStateTitle, emptyStateMessage;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,56 +57,50 @@ public class BorrowFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_borrow, container, false);
 
-        // Initialize views
         recyclerView = root.findViewById(R.id.recyclerBorrowedBooks);
         btnCurrentlyBorrowed = root.findViewById(R.id.btnCurrentlyBorrowed);
         btnTransactionHistory = root.findViewById(R.id.btnTransactionHistory);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        emptyStateContainer = root.findViewById(R.id.emptyStateContainer);
+        emptyStateTitle = root.findViewById(R.id.emptyStateTitle);
+        emptyStateMessage = root.findViewById(R.id.emptyStateMessage);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BorrowedBookAdapter(getContext(), displayedBooks, this::showPopup);
         recyclerView.setAdapter(adapter);
 
-        // Set up button click listeners
-        btnCurrentlyBorrowed.setOnClickListener(v -> showCurrentlyBorrowed());
-        btnTransactionHistory.setOnClickListener(v -> showTransactionHistory());
+        btnCurrentlyBorrowed.setOnClickListener(v -> {
+            showingCurrentlyBorrowed = true;
+            updateButtonStyles();
+            filterBooks();
+        });
+        btnTransactionHistory.setOnClickListener(v -> {
+            showingCurrentlyBorrowed = false;
+            updateButtonStyles();
+            filterBooks();
+        });
 
         queue = Volley.newRequestQueue(requireContext());
         loadBorrowedBooks();
 
+        updateButtonStyles();
         return root;
     }
 
-    private void showCurrentlyBorrowed() {
-        showingCurrentlyBorrowed = true;
-        updateButtonStyles();
-        filterBooks();
-    }
-
-    private void showTransactionHistory() {
-        showingCurrentlyBorrowed = false;
-        updateButtonStyles();
-        filterBooks();
-    }
-
     private void updateButtonStyles() {
+        if (btnCurrentlyBorrowed == null || btnTransactionHistory == null) return;
+
         if (showingCurrentlyBorrowed) {
-            // Currently Borrowed - Active style
             btnCurrentlyBorrowed.setBackgroundTintList(
                     android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#c5c035")));
             btnCurrentlyBorrowed.setTextColor(getResources().getColor(android.R.color.white, null));
-
-            // Transaction History - Inactive style
             btnTransactionHistory.setBackgroundTintList(
                     getResources().getColorStateList(android.R.color.darker_gray, null));
             btnTransactionHistory.setTextColor(getResources().getColor(android.R.color.black, null));
         } else {
-            // Transaction History - Active style
             btnTransactionHistory.setBackgroundTintList(
                     android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#c5c035")));
             btnTransactionHistory.setTextColor(getResources().getColor(android.R.color.white, null));
-
-            // Currently Borrowed - Inactive style
             btnCurrentlyBorrowed.setBackgroundTintList(
                     getResources().getColorStateList(android.R.color.darker_gray, null));
             btnCurrentlyBorrowed.setTextColor(getResources().getColor(android.R.color.black, null));
@@ -110,34 +109,30 @@ public class BorrowFragment extends Fragment {
 
     private void filterBooks() {
         displayedBooks.clear();
-
         for (BorrowedBook book : allBooks) {
             boolean isReturned = isBookReturned(book);
-
             if (showingCurrentlyBorrowed) {
-                // Show books that are NOT returned (dateOfReturn is 00/00/0000 or --)
-                if (!isReturned) {
-                    displayedBooks.add(book);
-                }
+                if (!isReturned) displayedBooks.add(book);
             } else {
-                // Show books that ARE returned
-                if (isReturned) {
-                    displayedBooks.add(book);
-                }
+                if (isReturned) displayedBooks.add(book);
             }
         }
 
-        safeUi(() -> adapter.notifyDataSetChanged());
+        safeUi(() -> {
+            adapter.notifyDataSetChanged();
+            updateEmptyStateVisibility();
+        });
     }
 
     private boolean isBookReturned(BorrowedBook book) {
+        if (book == null) return false;
         if (book.dateOfReturn == null ||
                 book.dateOfReturn.equals("00/00/0000") ||
                 book.dateOfReturn.equals("--") ||
                 book.dateOfReturn.trim().isEmpty()) {
-            return false; // Not returned
+            return false;
         }
-        return true; // Returned
+        return true;
     }
 
     private void loadBorrowedBooks() {
@@ -145,10 +140,11 @@ public class BorrowFragment extends Fragment {
         String regno = prefs.getString("regno", "");
         if (regno == null || regno.isEmpty()) {
             Log.e(TAG, "Regno is empty — cannot fetch borrowed books.");
+            safeUi(this::filterBooks);
             return;
         }
 
-        String url = "http://192.168.10.25/jspapi/Vignan_Library_app/student_info.jsp?regno=" + regno;
+        String url = "http://160.187.169.13/Vignan_Library_app/student_info.jsp?regno=" + regno;
         Log.d(TAG, "Fetching borrowed books from: " + url);
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -159,35 +155,40 @@ public class BorrowFragment extends Fragment {
 
                         allBooks.clear();
                         if (data != null) {
-                            for (int i = 0; i < data.length(); i++) {
-                                JSONObject item = data.optJSONObject(i);
-                                if (item == null) continue;
+                            if (data.length() == 0) {
+                                safeUi(this::filterBooks);
+                            } else {
+                                for (int i = 0; i < data.length(); i++) {
+                                    JSONObject item = data.optJSONObject(i);
+                                    if (item == null) continue;
 
-                                String accno = item.optString("accno", "");
-                                String dateOfIssue = item.optString("dateofissue", "--");
-                                String dateOfReturn = item.optString("dateofreturn", "--");
+                                    String accno = item.optString("accno", "");
+                                    String dateOfIssue = item.optString("dateofissue", "--");
+                                    String dateOfReturn = item.optString("dateofreturn", "--");
 
-                                if (!accno.isEmpty()) {
-                                    fetchBookMeta(accno, dateOfIssue, dateOfReturn);
+                                    if (!accno.isEmpty()) {
+                                        fetchBookMeta(accno, dateOfIssue, dateOfReturn);
+                                    }
                                 }
                             }
                         } else {
-                            Log.w(TAG, "No data found in student details.");
-                            safeUi(() -> {
-                                filterBooks();
-                            });
+                            safeUi(this::filterBooks);
                         }
                     } catch (Exception e) {
                         Log.e(TAG, "Error parsing student details JSON", e);
+                        safeUi(this::filterBooks);
                     }
                 }),
-                error -> Log.e(TAG, "Error fetching student details: ", error));
+                error -> {
+                    Log.e(TAG, "Error fetching student details: ", error);
+                    safeUi(this::filterBooks);
+                });
 
         queue.add(request);
     }
 
     private void fetchBookMeta(String accno, String dateOfIssue, String dateOfReturn) {
-        String url = "http://192.168.10.25/jspapi/Vignan_Library_app/book_details.jsp?accno=" + accno;
+        String url = "http://160.187.169.13/Vignan_Library_app/book_details.jsp?accno=" + accno;
         Log.d(TAG, "Fetching meta for accno: " + accno);
 
         StringRequest req = new StringRequest(Request.Method.GET, url,
@@ -209,20 +210,12 @@ public class BorrowFragment extends Fragment {
                             book.dateOfIssue = dateOfIssue;
                             book.dateOfReturn = dateOfReturn;
 
-                            // Debug logging
-                            Log.d(TAG, "========================================");
-                            Log.d(TAG, "Book Title: " + title);
-                            Log.d(TAG, "Date of Issue: [" + dateOfIssue + "]");
-                            Log.d(TAG, "Date of Return: [" + dateOfReturn + "]");
-                            Log.d(TAG, "========================================");
-
                             safeUi(() -> {
-                                // Prevent duplicates
                                 for (BorrowedBook existing : allBooks) {
                                     if (existing.accno.equals(book.accno)) return;
                                 }
                                 allBooks.add(book);
-                                filterBooks(); // Re-filter to show in correct tab
+                                filterBooks();
                             });
                         } else {
                             Log.w(TAG, "No data for accno: " + accno);
@@ -236,7 +229,26 @@ public class BorrowFragment extends Fragment {
         queue.add(req);
     }
 
-    /** Safely run UI updates only if fragment is still active */
+    private void updateEmptyStateVisibility() {
+        if (!isAdded() || getActivity() == null) return;
+
+        if (displayedBooks.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyStateContainer.setVisibility(View.VISIBLE);
+
+            if (showingCurrentlyBorrowed) {
+                emptyStateTitle.setText("No books currently borrowed");
+                emptyStateMessage.setText("You don't have any books borrowed right now. 📚\n\nVisit the catalog to borrow books or check back later.");
+            } else {
+                emptyStateTitle.setText("No transaction history");
+                emptyStateMessage.setText("You have no past borrow/return transactions. 🌟\n\nOnce you return borrowed books, they will appear here.");
+            }
+        } else {
+            emptyStateContainer.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void safeUi(Runnable action) {
         if (isAdded() && getActivity() != null) {
             requireActivity().runOnUiThread(() -> {
