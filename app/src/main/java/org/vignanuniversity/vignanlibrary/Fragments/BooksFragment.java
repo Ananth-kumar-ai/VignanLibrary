@@ -24,7 +24,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.vignanuniversity.vignanlibrary.Book;
 import org.vignanuniversity.vignanlibrary.BookAdapter;
@@ -51,9 +50,12 @@ public class BooksFragment extends Fragment {
     private Runnable searchRunnable;
     private boolean isLoading = false;
 
+    private static final String REQUEST_TAG = "BooksFragmentRequest";
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_books, container, false);
 
         if (getArguments() != null) {
@@ -154,12 +156,13 @@ public class BooksFragment extends Fragment {
                         String publisher = obj.optString("Publisher", "Unknown Publisher");
                         String edition = obj.optString("Edition", "Unknown Edition");
                         String department = obj.optString("Department", "Unknown Department");
+                        String author = obj.optString("Author", "Unknown Author"); // added
 
-                        allBooks.add(new Book(title, publisher, edition, department));
+                        allBooks.add(new Book(title, publisher, edition, department, author));
                     }
 
                     filteredBooks.addAll(allBooks);
-                    bookAdapter.notifyDataSetChanged();
+                    if (bookAdapter != null) bookAdapter.notifyDataSetChanged();
                     updateBookCount();
                     showLoading(false);
                 },
@@ -169,7 +172,10 @@ public class BooksFragment extends Fragment {
                     showLoading(false);
                 });
 
-        // ✅ Prevent infinite waits
+        // set a tag so we can cancel this request when the view is destroyed
+        request.setTag(REQUEST_TAG);
+
+        // Prevent infinite waits
         request.setRetryPolicy(new DefaultRetryPolicy(
                 5000, // 5s timeout
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -177,7 +183,6 @@ public class BooksFragment extends Fragment {
 
         requestQueue.add(request);
     }
-
 
     private void filterBooks() {
         if (!isAdded()) return;
@@ -192,7 +197,8 @@ public class BooksFragment extends Fragment {
                 if ((book.getTitle() != null && book.getTitle().toLowerCase().contains(searchQuery)) ||
                         (book.getPublisher() != null && book.getPublisher().toLowerCase().contains(searchQuery)) ||
                         (book.getDepartment() != null && book.getDepartment().toLowerCase().contains(searchQuery)) ||
-                        (book.getEdition() != null && book.getEdition().toLowerCase().contains(searchQuery))) {
+                        (book.getEdition() != null && book.getEdition().toLowerCase().contains(searchQuery)) ||
+                        (book.getAuthor() != null && book.getAuthor().toLowerCase().contains(searchQuery))) { // include author
                     filteredBooks.add(book);
                 }
             }
@@ -202,7 +208,7 @@ public class BooksFragment extends Fragment {
             tvSearchResults.setVisibility(View.VISIBLE);
         }
 
-        bookAdapter.notifyDataSetChanged();
+        if (bookAdapter != null) bookAdapter.notifyDataSetChanged();
         updateBookCount();
         updateEmptyState();
     }
@@ -255,7 +261,8 @@ public class BooksFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (requestQueue != null) requestQueue.cancelAll(this);
+        // Cancel pending Volley requests with our tag
+        if (requestQueue != null) requestQueue.cancelAll(REQUEST_TAG);
         if (searchHandler != null && searchRunnable != null)
             searchHandler.removeCallbacks(searchRunnable);
     }

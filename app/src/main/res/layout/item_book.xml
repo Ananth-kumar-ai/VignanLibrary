@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Title -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -22,14 +23,26 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
+        <!-- Author (ADDED) -->
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444444"
+            android:layout_marginTop="4dp"
+            android:text="Author: Unknown"
+            android:textSize="14sp" />
+
+        <!-- Publisher -->
         <TextView
             android:id="@+id/tvPublisher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#555555"
             android:layout_marginTop="4dp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
+        <!-- Edition -->
         <TextView
             android:id="@+id/tvEdition"
             android:layout_width="wrap_content"
@@ -37,6 +50,7 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="4dp"/>
 
+        <!-- Department -->
         <TextView
             android:id="@+id/tvDepartment"
             android:layout_width="wrap_content"
