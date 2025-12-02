@@ -6,11 +6,10 @@
     android:background="@drawable/gradient_background"
     android:padding="16dp">
 
-    <!-- Header text -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Previous Year Question Papers"
+        android:text="Digital Library – E-Books , E-Journals"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
@@ -20,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose your department to access question papers"
+        android:text="Select a resource to open"
         android:textSize="14sp"
         android:textColor="#ECF0F1"
         android:gravity="center"
@@ -28,22 +27,20 @@
 
     <!-- Search -->
     <EditText
-        android:id="@+id/searchEditText"
+        android:id="@+id/searchEbooks"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="Search departments..."
+        android:hint="Search resources..."
         android:background="@android:color/white"
         android:padding="12dp"
-        android:drawablePadding="8dp"
         android:textSize="16sp"
         android:layout_marginBottom="12dp" />
 
     <!-- RecyclerView list -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerPyqp"
+        android:id="@+id/recyclerEbooks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingBottom="8dp"/>
+        android:layout_weight="1"/>
 
 </LinearLayout>

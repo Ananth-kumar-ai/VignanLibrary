@@ -1,7 +1,5 @@
 package org.vignanuniversity.vignanlibrary.Fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,180 +7,204 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.vignanuniversity.vignanlibrary.PYQPAdapter;
+import org.vignanuniversity.vignanlibrary.Models.PYQDepartment;
+import org.vignanuniversity.vignanlibrary.Models.PYQPListItem;
 import org.vignanuniversity.vignanlibrary.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 public class PYQPFragment extends Fragment {
 
-    private static final String BASE_URL = "http://160.187.169.16:8080/jspui/handle/123456789/";
+    private static final String API_URL =
+            "http://192.168.10.25/jspapi/Vignan_Library_app/pyqsAPI.jsp?action=read";
 
     private EditText searchEditText;
-    private TextView engineeringHeader, computerScienceHeader, businessHeader,
-            lawHeader, scienceHeader, pharmacyHeader;
+    private RecyclerView recyclerView;
+    private PYQPAdapter adapter;
 
-    private static class Department {
-        String name;
-        String urlId;
-        String searchKeywords;
-        String section;
-        String xmlId;
-
-        Department(String name, String urlId, String searchKeywords, String section, String xmlId) {
-            this.name = name;
-            this.urlId = urlId;
-            this.searchKeywords = searchKeywords != null ? searchKeywords.toLowerCase() : "";
-            this.section = section;
-            this.xmlId = xmlId;
-        }
-    }
-
-    private static class DeptCard {
-        Department department;
-        CardView card;
-        DeptCard(Department d, CardView c) { department = d; card = c; }
-    }
-
-    private final Department[] departments = {
-            new Department("AGRICULTURE ENGINEERING", "2889", "agriculture engineering agri", "engineering", "cardAgriculture"),
-            new Department("AUTOMOBILE ENGINEERING", "2790", "automobile auto mobile car", "engineering", "cardAutomobile"),
-            new Department("BIO INFORMATICS ENGINEERING", "1457", "bio informatics bioinformatics", "engineering", "cardBioInformatics"),
-            new Department("BIO MEDICAL ENGINEERING", "1662", "bio medical biomedical", "engineering", "cardBioMedical"),
-            new Department("BIO TECHNOLOGY ENGINEERING", "1890", "bio technology biotechnology", "engineering", "cardBioTechnology"),
-            new Department("CHEMICAL ENGINEERING", "2447", "chemical chemistry", "engineering", "cardChemical"),
-            new Department("CIVIL ENGINEERING", "2301", "civil construction", "engineering", "cardCivil"),
-            new Department("ELECTRICAL & ELECTRONICS ENGINEERING", "205", "electrical electronics eee", "engineering", "cardElectrical"),
-            new Department("ELECTRONICS & COMMUNICATION ENGINEERING", "204", "electronics communication ece", "engineering", "cardElectronics"),
-            new Department("FOOD TECHNOLOGY ENGINEERING", "2297", "food technology", "engineering", "cardFoodTech"),
-            new Department("INFORMATION TECHNOLOGY ENGINEERING", "2544", "information technology it", "engineering", "cardIT"),
-            new Department("MECHANICAL ENGINEERING", "1996", "mechanical mech", "engineering", "cardMechanical"),
-            new Department("PETROLEUM ENGINEERING", "2695", "petroleum oil", "engineering", "cardPetroleum"),
-            new Department("ROBOTICS & AUTOMATION ENGINEERING", "6521", "robotics automation robot", "engineering", "cardRobotics"),
-            new Department("TEXTILE ENGINEERING", "2166", "textile cloth fabric", "engineering", "cardTextile"),
-            new Department("COMPUTER SCIENCE ENGINEERING", "202", "computer science cse cs", "computer_science", "cardCSE"),
-            new Department("CSE - DATA SCIENCE", "6615", "data science cse ds", "computer_science", "cardCSEDataScience"),
-            new Department("CSE - AI & ML", "4297", "artificial intelligence machine learning ai ml cse", "computer_science", "cardCSEAIML"),
-            new Department("CSE - CS", "4374", "computer science cse cs", "computer_science", "cardCSECS"),
-            new Department("CSE - CS - BS", "4375", "computer science cse cs bs", "computer_science", "cardCSECSBS"),
-            new Department("BCA", "5615", "bca computer applications", "computer_science", "cardBCA"),
-            new Department("MCA", "5161", "mca computer applications master", "computer_science", "cardMCA"),
-            new Department("BBA", "5528", "bba business administration bachelor", "business", "cardBBA"),
-            new Department("MBA", "5094", "mba business administration master", "business", "cardMBA"),
-            new Department("BA - LLB", "5299", "ba llb law bachelor arts", "law", "cardBALLB"),
-            new Department("BBA - LLB", "5470", "bba llb law business administration", "law", "cardBBALLB"),
-            new Department("BSC", "5927", "bsc science bachelor", "science", "cardBSC"),
-            new Department("AGRICULTURE - BSC", "5738", "agriculture bsc science", "science", "cardAgricultureBSC"),
-            new Department("MSC - CHEMISTRY", "5213", "msc chemistry master science", "science", "cardMSCChemistry"),
-            new Department("B - PHARMACY", "3515", "pharmacy pharmaceutical bachelor", "pharmacy", "cardBPharmacy")
-    };
-
-    private final List<DeptCard> deptCardList = new ArrayList<>();
+    private final List<PYQDepartment> allDepartments = new ArrayList<>();
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_pyqp, container, false);
-        initializeViews(view);
-        setupDepartmentCards(view);
-        setupSearch();
+
+        searchEditText = view.findViewById(R.id.searchEditText);
+        recyclerView = view.findViewById(R.id.recyclerPyqp);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new PYQPAdapter(requireContext());
+        recyclerView.setAdapter(adapter);
+
+        initSearch();
+        loadDepartments();
+
         return view;
     }
 
-    private void initializeViews(View view) {
-        searchEditText = view.findViewById(R.id.searchEditText);
-        engineeringHeader = view.findViewById(R.id.engineeringHeader);
-        computerScienceHeader = view.findViewById(R.id.computerScienceHeader);
-        businessHeader = view.findViewById(R.id.businessHeader);
-        lawHeader = view.findViewById(R.id.lawHeader);
-        scienceHeader = view.findViewById(R.id.scienceHeader);
-        pharmacyHeader = view.findViewById(R.id.pharmacyHeader);
-    }
-
-    private void setupDepartmentCards(View view) {
-        deptCardList.clear();
-        for (Department dept : departments) {
-            if (dept.xmlId == null || dept.xmlId.trim().isEmpty()) continue;
-            int id = getResources().getIdentifier(dept.xmlId, "id", requireContext().getPackageName());
-            if (id == 0) continue;
-            View found = view.findViewById(id);
-            if (found instanceof CardView) {
-                CardView card = (CardView) found;
-                deptCardList.add(new DeptCard(dept, card));
-                card.setOnClickListener(v -> openDepartmentUrl(dept));
-            }
-        }
-    }
-
-    private void setupSearch() {
-        if (searchEditText == null) return;
+    private void initSearch() {
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterDepartments(s.toString());
+                applyFilter(s.toString().trim());
             }
         });
     }
 
-    private void filterDepartments(String query) {
-        String searchQuery = (query == null) ? "" : query.toLowerCase().trim();
+    private void loadDepartments() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(API_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setConnectTimeout(8000);
+                    conn.setReadTimeout(8000);
 
-        boolean hasEngineering = false, hasCS = false, hasBusiness = false, hasLaw = false, hasScience = false, hasPharmacy = false;
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(conn.getInputStream())
+                    );
 
-        for (DeptCard dc : deptCardList) {
-            if (dc == null || dc.card == null || dc.department == null) continue;
-            Department dept = dc.department;
-            CardView card = dc.card;
-            boolean match;
-            if (searchQuery.isEmpty()) {
-                match = true;
-            } else {
-                match = dept.searchKeywords.contains(searchQuery) || dept.name.toLowerCase().contains(searchQuery);
-            }
-            card.setVisibility(match ? View.VISIBLE : View.GONE);
-            if (match) {
-                switch (dept.section) {
-                    case "engineering": hasEngineering = true; break;
-                    case "computer_science": hasCS = true; break;
-                    case "business": hasBusiness = true; break;
-                    case "law": hasLaw = true; break;
-                    case "science": hasScience = true; break;
-                    case "pharmacy": hasPharmacy = true; break;
+                    StringBuilder json = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        json.append(line);
+                    }
+
+                    br.close();
+                    conn.disconnect();
+
+                    JSONObject root = new JSONObject(json.toString());
+                    JSONArray arr = root.getJSONArray("data");
+
+                    allDepartments.clear();
+
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = arr.getJSONObject(i);
+
+                        PYQDepartment dept = new PYQDepartment();
+                        dept.id = obj.getInt("id");
+                        dept.deptName = obj.getString("dept_name");
+                        dept.urlId = obj.getString("url_id");
+                        dept.section = obj.getString("section");
+
+                        allDepartments.add(dept);
+                    }
+
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                applyFilter(""); // show all initially
+                            }
+                        });
+                    }
+
+                } catch (final Exception e) {
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(requireContext(),
+                                        "Failed to load departments",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             }
-        }
-
-        if (engineeringHeader != null) engineeringHeader.setVisibility(hasEngineering ? View.VISIBLE : View.GONE);
-        if (computerScienceHeader != null) computerScienceHeader.setVisibility(hasCS ? View.VISIBLE : View.GONE);
-        if (businessHeader != null) businessHeader.setVisibility(hasBusiness ? View.VISIBLE : View.GONE);
-        if (lawHeader != null) lawHeader.setVisibility(hasLaw ? View.VISIBLE : View.GONE);
-        if (scienceHeader != null) scienceHeader.setVisibility(hasScience ? View.VISIBLE : View.GONE);
-        if (pharmacyHeader != null) pharmacyHeader.setVisibility(hasPharmacy ? View.VISIBLE : View.GONE);
+        }).start();
     }
 
-    private void openDepartmentUrl(Department department) {
-        if (department == null) return;
-        String url = BASE_URL + department.urlId;
-        Uri uri = Uri.parse(url);
-        if (uri.getScheme() == null) uri = Uri.parse("http://" + url);
-        if (isAdded()) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            try {
-                startActivity(Intent.createChooser(intent, "Open with"));
-            } catch (Exception e) {
-                Toast.makeText(requireContext(), "No browser found to open the link", Toast.LENGTH_SHORT).show();
+    private void applyFilter(String query) {
+        String q = query.toLowerCase(Locale.getDefault());
+
+        List<PYQDepartment> filtered = new ArrayList<>();
+        for (PYQDepartment d : allDepartments) {
+            if (q.isEmpty() ||
+                    d.deptName.toLowerCase(Locale.getDefault()).contains(q)) {
+                filtered.add(d);
             }
         }
+
+        List<PYQPListItem> sectioned = buildSectionedList(filtered);
+        adapter.setItems(sectioned);
+    }
+
+    private List<PYQPListItem> buildSectionedList(List<PYQDepartment> depts) {
+        List<PYQPListItem> result = new ArrayList<>();
+
+        // group by section
+        Map<String, List<PYQDepartment>> map = new LinkedHashMap<>();
+
+        for (PYQDepartment d : depts) {
+            List<PYQDepartment> list = map.get(d.section);
+            if (list == null) {
+                list = new ArrayList<>();
+                map.put(d.section, list);
+            }
+            list.add(d);
+        }
+
+        // maintain fixed section order
+        String[] order = new String[]{
+                "engineering",
+                "computer_science",
+                "business",
+                "law",
+                "science",
+                "pharmacy"
+        };
+
+        for (String sec : order) {
+            List<PYQDepartment> list = map.get(sec);
+            if (list == null || list.isEmpty()) continue;
+
+            // header label
+            String headerTitle = getSectionTitle(sec);
+            result.add(PYQPListItem.createHeader(headerTitle));
+
+            // sort by name
+            Collections.sort(list, new Comparator<PYQDepartment>() {
+                @Override
+                public int compare(PYQDepartment o1, PYQDepartment o2) {
+                    return o1.deptName.compareToIgnoreCase(o2.deptName);
+                }
+            });
+
+            for (PYQDepartment d : list) {
+                result.add(PYQPListItem.createDepartment(d));
+            }
+        }
+
+        return result;
+    }
+
+    private String getSectionTitle(String sectionKey) {
+        if ("engineering".equals(sectionKey)) return "Engineering";
+        if ("computer_science".equals(sectionKey)) return "Computer Science & IT";
+        if ("business".equals(sectionKey)) return "Business & Management";
+        if ("law".equals(sectionKey)) return "Law";
+        if ("science".equals(sectionKey)) return "Science";
+        if ("pharmacy".equals(sectionKey)) return "Pharmacy";
+        return sectionKey;
     }
 }
