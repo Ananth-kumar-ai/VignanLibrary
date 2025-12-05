@@ -51,7 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Statistics Grid - 6 Cards (2 rows) -->
+        <!-- Statistics Grid - 6 Cards (2 rows x 3 columns) -->
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/statsGrid"
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp">
 
-            <!-- Total Books Card -->
+            <!-- Card 1 - ID 1 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/totalBooksCard"
                 android:layout_width="0dp"
@@ -94,10 +94,9 @@
                         android:layout_marginBottom="8dp" />
 
                     <TextView
-                        android:id="@+id/totalBooksCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loading."
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#DC2626"
@@ -106,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Books"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#7F1D1D"
                         android:gravity="center" />
@@ -114,7 +113,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Not Issued Books -->
+            <!-- Card 2 - ID 2 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/notIssuedBooksCard"
                 android:layout_width="0dp"
@@ -145,10 +144,9 @@
                         android:layout_marginBottom="8dp" />
 
                     <TextView
-                        android:id="@+id/notIssuedBooksCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loading."
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#16A34A"
@@ -157,7 +155,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Not Issued"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#14532D"
                         android:gravity="center" />
@@ -165,7 +163,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Issued Books -->
+            <!-- Card 3 - ID 3 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/issuedBooksCard"
                 android:layout_width="0dp"
@@ -196,10 +194,9 @@
                         android:layout_marginBottom="8dp" />
 
                     <TextView
-                        android:id="@+id/issuedBooksCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loading."
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#EA580C"
@@ -208,7 +205,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Issued Books"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#9A3412"
                         android:gravity="center" />
@@ -216,7 +213,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- E-Books Card -->
+            <!-- Card 4 - ID 4 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/eBooksCard"
                 android:layout_width="0dp"
@@ -249,7 +246,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="207,366"
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#0369A1"
@@ -258,7 +255,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="E-Books"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#075985"
                         android:gravity="center" />
@@ -266,7 +263,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Online Journals Card -->
+            <!-- Card 5 - ID 5 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/onlineJournalsCard"
                 android:layout_width="0dp"
@@ -299,7 +296,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7,127"
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#7C3AED"
@@ -308,7 +305,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Online Journals"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#581C87"
                         android:gravity="center" />
@@ -316,7 +313,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Print Journals Card -->
+            <!-- Card 6 - ID 6 in Database -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/printJournalsCard"
                 android:layout_width="0dp"
@@ -349,7 +346,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="261"
+                        android:text="..."
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#A21CAF"
@@ -358,7 +355,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Print Journals"
+                        android:text="Loading"
                         android:textSize="12sp"
                         android:textColor="#86198F"
                         android:gravity="center" />
@@ -368,7 +365,7 @@
 
         </androidx.gridlayout.widget.GridLayout>
 
-        <!-- Announcements Title (directly below statsGrid) -->
+        <!-- Announcements Title -->
         <TextView
             android:id="@+id/announcementsTitle"
             android:layout_width="match_parent"
@@ -384,7 +381,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Announcements Card - highlighted -->
+        <!-- Announcements Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/announcementsCard"
             android:layout_width="match_parent"
@@ -404,7 +401,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Header row with icon + label -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -443,7 +439,6 @@
 
                 </LinearLayout>
 
-                <!-- Divider line -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -451,7 +446,6 @@
                     android:layout_marginBottom="8dp"
                     android:background="#E0E0E0" />
 
-                <!-- Announcements text content -->
                 <TextView
                     android:id="@+id/announcementsText"
                     android:layout_width="match_parent"
@@ -469,7 +463,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- More Information Card (below announcements) -->
+        <!-- More Information Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/moreInfoCard"
             android:layout_width="match_parent"
